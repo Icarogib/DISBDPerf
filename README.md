@@ -2,6 +2,7 @@
 Projeto para a disciplina de Banco de Dados, focado em vendas de perfumes (perfumaria)
 
 
-Utilize 'npm init' para baixar modulos do node
+Utilize 'npm install' para baixar modulos do node
 
+Icaro starts.
 Camilly enters
