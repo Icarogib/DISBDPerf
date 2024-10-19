@@ -1,38 +1,117 @@
-.App {
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
   text-align: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.login-container{
+  text-align: center;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.ttPrincipal{
+  font-size: 1.5em;
+  margin-inline: 100px;
+  color: #0a0a0a;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.catalog-container{
+  margin-inline: 100px;
+  position: relative;
+  color: #0a0a0a;
+}
+
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 30px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.container, .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+input {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  background-color: #007bff;
   color: white;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background-color: #0056b3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.BemVindo{
+  position: center;
+}
+
+.button_clientes{
+  display: flex;
+  flex-direction: column; /* Alinha os itens em coluna */
+  align-items: flex-start; /* Alinha os botões à esquerda */
+  margin-top: 10px; /* Espaçamento acima dos botões */
+}
+
+.button_clientes button {
+  margin-bottom: 10px; /* Espaçamento entre os botões */
+}
+
+.dados-pessoais{
+  display: flex;
+  background-color: #ffffff;
+  padding: 75px;
+  flex-direction: column;
+  align-items: center;
+  height: 500px;
+  justify-content: space-between;
+}
+
+.ttDP{
+  background-color: #1dd816;
+  padding: 10px;
 }
