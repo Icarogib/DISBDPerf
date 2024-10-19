@@ -1,6 +1,6 @@
 class Produto {
-  constructor(produto_id = null, nome = '', descricao = '', preco = null, categoria = '', fabricado_em = '', estoque = null) {
-      this.produto_id = produto_id;
+  constructor(id = null, nome = '', descricao = '', preco = null, categoria = '', fabricado_em = '', estoque = null) {
+      this.id = id;
       this.nome = nome;
       this.descricao = descricao;
       this.preco = preco;
@@ -10,7 +10,7 @@ class Produto {
   }
 
   getID() {
-      return this.produto_id;
+      return this.id;
   }
   getNome() {
       return this.nome;
@@ -32,7 +32,7 @@ class Produto {
   }
 
   setID(i) {
-      this.produto_id = i;
+      this.id = i;
   }
   setNome(n) {
       this.nome = n;

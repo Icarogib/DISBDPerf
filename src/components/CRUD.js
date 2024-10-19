@@ -56,6 +56,10 @@ class CRUD {
         const values = Object.values(data);
         const sql = `INSERT INTO ${table} (${keys.join(', ')}) VALUES (${keys.map(() => '?').join(', ')})`;
         this.connection.query(sql, values, (err, results) => {
+          console.log("teste: ");
+          console.log(err);
+          console.log(results);
+          console.log("fim");
           if (err) throw err;
           callback(results);
         });
@@ -73,8 +77,8 @@ class CRUD {
     }
   
     pesquisarPorNome(nome, callback) {
-      //seleciona todo o conteudo da tabela clientes onde nome for igual ao passado pelo parametro
-      const sql = `SELECT * FROM clientes WHERE nome LIKE ?`;
+      //seleciona todo o conteudo da tabela cliente onde nome for igual ao passado pelo parametro
+      const sql = `SELECT * FROM cliente WHERE nome LIKE ?`;
       this.connection.query(sql, [`%${nome}%`], (err, results) => {
         if (err) throw err;
         callback(results);
@@ -82,7 +86,7 @@ class CRUD {
     }
   
     pesquisarPorNomeEstoque(nome, callback) {
-      //seleciona todo o conteudo da tabela clientes onde nome for igual ao passado pelo parametro
+      //seleciona todo o conteudo da tabela cliente onde nome for igual ao passado pelo parametro
        const sql = `SELECT * FROM estoque WHERE nome_produto LIKE ?`;
        this.connection.query(sql, [`%${nome}%`], (err, results) => {
          if (err) throw err;
@@ -92,16 +96,16 @@ class CRUD {
   
     pesquisarPorNomeVenda(nome, callback) {
       const sql = `
-          SELECT vendas.*, clientes.nome, estoque.nome_produto
+          SELECT vendas.*, cliente.nome, estoque.nome_produto
           FROM vendas
-          JOIN clientes ON vendas.cliente_id = clientes.id
+          JOIN cliente ON vendas.cliente_id = cliente.id
           JOIN estoque ON vendas.produto_id = estoque.id
-          WHERE clientes.nome LIKE ? OR estoque.nome_produto LIKE ?`;
-      // Esta consulta SQL seleciona informacoes das tabelas 'vendas', 'clientes' e 'estoque' 
+          WHERE cliente.nome LIKE ? OR estoque.nome_produto LIKE ?`;
+      // Esta consulta SQL seleciona informacoes das tabelas 'vendas', 'cliente' e 'estoque' 
       // e retorna resultados com base no nome do cliente ou no nome do produto.
 
-      // A query faz o JOIN entre as tabelas 'vendas', 'clientes' e 'estoque' para correlacionar os dados 
-      // de vendas com o nome dos clientes e dos produtos.
+      // A query faz o JOIN entre as tabelas 'vendas', 'cliente' e 'estoque' para correlacionar os dados 
+      // de vendas com o nome dos cliente e dos produtos.
 
       this.connection.query(sql, [`%${nome}%`, `%${nome}%`], (err, results) => {
           if (err) throw err;
