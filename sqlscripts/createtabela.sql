@@ -4,9 +4,9 @@ CREATE TABLE cliente (
     cpf INT NOT NULL,
     email VARCHAR(40) NOT NULL,
     endereco VARCHAR(50) NOT NULL,
+    cidade VARCHAR(20) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
-    torce_fla BOOLEAN NOT NULL,
-    cidade VARCHAR(20) NOT NULL
+    torce_fla VARCHAR(3) NOT NULL
 );
 
 
@@ -25,7 +25,7 @@ CREATE TABLE produto (
     descricao VARCHAR(45) NOT NULL,
     preco DECIMAL(10, 2) NOT NULL,
     categoria VARCHAR(45) NOT NULL,
-    fabricado_em_mari BOOLEAN NOT NULL,
+    fabricado_em VARCHAR(45) NOT NULL,
     estoque INT NOT NULL
 );
 
