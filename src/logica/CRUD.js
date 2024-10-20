@@ -56,10 +56,6 @@ class CRUD {
         const values = Object.values(data);
         const sql = `INSERT INTO ${table} (${keys.join(', ')}) VALUES (${keys.map(() => '?').join(', ')})`;
         this.connection.query(sql, values, (err, results) => {
-          console.log("teste: ");
-          console.log(err);
-          console.log(results);
-          console.log("fim");
           if (err) throw err;
           callback(results);
         });
