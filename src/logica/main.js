@@ -77,6 +77,47 @@ app.delete('/cliente/:id', (req, res) => {
   });
 });
 
+// Rotas CRUD para vendedor
+app.get('/vendedor', (req, res) => {
+  const crud = new CRUD(connection);
+  crud.listar('vendedor', (vendedor) => {
+    res.json(vendedor);
+  });
+});
+
+app.post('/vendedor', (req, res) => {
+  const crud = new CRUD(connection);
+  const { nome, cpf, email, telefone } = req.body;
+  const vendedor = new vendedor(null, nome, cpf, email, telefone );
+  crud.inserir('vendedor', vendedor, (result) => {
+    res.json({ message: 'Vendedor inserido com sucesso', id: result.insertId });
+  });
+});
+
+app.put('/vendedor/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  const { nome, cpf, email, telefone, } = req.body;
+  const vendedorAtualizado = new vendedor(id, nome, cpf, email, telefone );
+  crud.atualizar('vendedor', id, vendedorAtualizado, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'Vendedor não encontrado' });
+    else
+        res.json({ message: 'Vendedor atualizado com sucesso' });
+  });
+});
+
+app.delete('/vendedor/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  crud.deletar('vendedor', id, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'Vendedor não encontrado' });
+    else
+        res.json({ message: 'Vendedor removido com sucesso' });
+  });
+});
+
 // Rotas CRUD para Estoque
 app.get('/produto', (req, res) => {
   const crud = new CRUD(connection);
