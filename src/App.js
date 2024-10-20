@@ -1,6 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
 
+import React from 'react';
+import ClienteList from './components/listaClientes'; // Ajuste o caminho conforme necessário
+
+function App() {
+    return (
+        <div>
+            <ClienteList /> {/* Renderiza o componente de lista de clientes */}
+        </div>
+    );
+}
+
+export default App;
+
+/*
 function App() {
   return (
     <div className="App">
@@ -22,4 +36,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;*/

@@ -8,7 +8,7 @@ const mysql = require('mysql2');
 const cors = require('cors')
 
 const corsOption = {
-    origin: ['http://127.0.0.1:5500'],
+    origin: ['http://127.0.0.1:5500', 'http://localhost:3000'],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }
