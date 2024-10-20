@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Importando Axios para realizar requisições HTTP
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 
 function CadastrarClientes() {
-  // Estado inicial com os dados do cliente (esses dados poderiam ser carregados de um backend)
   const [dadosCliente, setDadosCliente] = useState({
     nome: 'João da Silva',
     cpf: '123.456.789-00',
@@ -16,15 +16,22 @@ function CadastrarClientes() {
   });
 
   const [editando, setEditando] = useState(true); // Estado para saber se o usuário está em modo de edição
-
   const navigate = useNavigate();
 
   // Função para salvar as alterações
-  const handleSalvar = () => {
-    // Aqui você pode adicionar a lógica para salvar os dados (no backend, por exemplo)
-    setEditando(false);
-    alert('Dados atualizados com sucesso!');
-    navigate('/dados_pessoais')
+  const handleSalvar = async () => {
+    try {
+      // Fazendo a requisição POST para salvar os dados do cliente no backend
+      const response = await axios.post('https://api.exemplo.com/clientes', dadosCliente); // Ajuste a URL para o seu backend
+      console.log('Dados salvos com sucesso:', response.data);
+
+      setEditando(false);
+      alert('Dados atualizados com sucesso!');
+      navigate('/dados_pessoais');
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error);
+      alert('Ocorreu um erro ao salvar os dados. Tente novamente.');
+    }
   };
 
   // Função para lidar com mudanças nos campos de input

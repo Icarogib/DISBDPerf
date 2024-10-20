@@ -1,19 +1,35 @@
 import React, { useState } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function LoginCliente() {
   const [cpf, setCpf] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (cpf) {
-      // Lógica de autenticação do cliente
-      console.log('Cliente autenticado com CPF:', cpf);
+      try {
+        // Faz uma requisição POST para o endpoint de login, enviando o CPF
+        const response = await axios.post('http://localhost:3001/login_cliente', { cpf });
 
-      navigate('/cliente_dashboard');
+        // Se a resposta for bem-sucedida, redireciona o cliente para o dashboard
+        if (response.data.success) {
+          console.log('Cliente autenticado com CPF:', cpf);
+          // Armazena o CPF no localStorage após login bem-sucedido
+          localStorage.setItem('clienteCpf', cpf);
+          navigate('/cliente_dashboard');
+        } else {
+          // Se a autenticação falhar, exibe a mensagem de erro
+          setError('CPF não encontrado ou inválido.');
+        }
+      } catch (err) {
+        console.error('Erro ao autenticar cliente:', err);
+        setError('Erro ao autenticar cliente. Tente novamente.');
+      }
     } else {
-      alert('Por favor, insira o CPF.');
+      setError('Por favor, insira o CPF.');
     }
   };
 
@@ -28,6 +44,7 @@ function LoginCliente() {
       />
       <button onClick={handleLogin}>Login</button>
       <button onClick={() => navigate('/login')}>Voltar</button>
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Exibe mensagem de erro se houver */}
     </div>
   );
 }

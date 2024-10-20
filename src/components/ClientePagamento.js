@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Importa Axios
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function Pagamento() {
@@ -6,7 +7,6 @@ function Pagamento() {
   const navigate = useNavigate();
   const { itensSelecionados } = location.state || { itensSelecionados: [] };
 
-  // Estado para armazenar a forma de pagamento selecionada
   const [formaPagamento, setFormaPagamento] = useState('');
 
   // Calcular o total
@@ -15,15 +15,27 @@ function Pagamento() {
   };
 
   // Função para finalizar o pagamento
-  const handleFinalizarCompra = () => {
+  const handleFinalizarCompra = async () => {
     if (!formaPagamento) {
       alert('Por favor, selecione uma forma de pagamento.');
       return;
     }
 
-    // Aqui você pode adicionar a lógica de finalização da compra com base na forma de pagamento
-    alert(`Compra finalizada com sucesso usando ${formaPagamento}!`);
-    navigate('/cliente_dashboard'); // Redireciona de volta à página inicial após a compra
+    const dadosCompra = {
+      itens: itensSelecionados,
+      total: calcularTotal(),
+      formaPagamento,
+    };
+
+    try {
+      // Enviar dados da compra para o backend
+      await axios.post('https://api.exemplo.com/checkout', dadosCompra); // Ajuste o endpoint
+      alert(`Compra finalizada com sucesso usando ${formaPagamento}!`);
+      navigate('/cliente_dashboard'); // Redireciona de volta à página inicial após a compra
+    } catch (error) {
+      console.error('Erro ao finalizar a compra:', error);
+      alert('Ocorreu um erro ao finalizar a compra. Tente novamente.');
+    }
   };
 
   return (

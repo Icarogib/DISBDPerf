@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Importação do Axios
 
 function CadastrarProduto() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ function CadastrarProduto() {
     fabricado_em_mari: false,
     estoque: ''
   });
+  const [mensagem, setMensagem] = useState(''); // Para exibir mensagens de sucesso ou erro
 
   const handleChange = (campo, valor) => {
     setProduto({
@@ -22,17 +24,25 @@ function CadastrarProduto() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aqui você adicionaria a lógica para enviar o produto ao banco de dados
-    alert('Produto cadastrado com sucesso!');
-    // Após cadastrar, limpa os campos
-    setProduto({
-      nome: '',
-      descricao: '',
-      preco: '',
-      categoria: '',
-      fabricado_em_mari: false,
-      estoque: ''
-    });
+    // Enviar o produto para o backend via POST
+    axios
+      .post('http://localhost:5000/produtos', produto) // Substitua pela URL correta do backend
+      .then((response) => {
+        setMensagem('Produto cadastrado com sucesso!');
+        // Após cadastrar, limpa os campos
+        setProduto({
+          nome: '',
+          descricao: '',
+          preco: '',
+          categoria: '',
+          fabricado_em_mari: false,
+          estoque: ''
+        });
+      })
+      .catch((error) => {
+        console.error('Erro ao cadastrar produto:', error);
+        setMensagem('Erro ao cadastrar o produto. Tente novamente.');
+      });
   };
 
   return (
@@ -89,6 +99,10 @@ function CadastrarProduto() {
 
         <button type="submit">Cadastrar Produto</button>
       </form>
+
+      {/* Mensagem de sucesso ou erro */}
+      {mensagem && <p>{mensagem}</p>}
+
       <button onClick={() => navigate('/gerenciar_estoque')}>Voltar</button>
     </div>
   );

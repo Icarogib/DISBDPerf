@@ -1,18 +1,45 @@
-import React, { useState } from 'react'; // Adicione useState aqui
+import React, { useState, useEffect } from 'react'; 
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function AppHomeCliente() {
-  const lixo = "Buceta";
   const navigate = useNavigate();
-  const [nomeCliente] = useState(lixo); // Altere 'João' para o nome real do cliente
+  const [nomeCliente, setNomeCliente] = useState(''); // Estado para armazenar o nome do cliente
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    // Obtém o CPF do cliente do localStorage
+    const cpf = localStorage.getItem('clienteCpf');
+
+    // Se o CPF não estiver presente, redireciona para a página de login
+    if (!cpf) {
+      navigate('/login');
+      return;
+    }
+
+    // Busca o nome do cliente com base no CPF
+    const fetchCliente = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/cliente/${cpf}`);
+        setNomeCliente(response.data.nome); // Atualiza o nome do cliente com os dados recebidos
+      } catch (err) {
+        console.error('Erro ao buscar dados do cliente:', err);
+        setError('Erro ao carregar informações do cliente.');
+      }
+    };
+
+    fetchCliente(); // Chama a função ao montar o componente
+  }, [navigate]);
+
   return (
     <div className="container">
       <div>
-      <div><h2>Bem-vindo, Cliente {nomeCliente}</h2></div> {/* Mensagem de boas-vindas */}
-      <div className='ttPrincipal'><h1>Salsichas's Perfumaria</h1></div>
-      <div className="catalog-container">
-      </div>
+        <div>
+          <h2>Bem-vindo, Cliente {nomeCliente}</h2> {/* Mensagem de boas-vindas com nome real */}
+        </div>
+        <div className='ttPrincipal'><h1>Salsichas's Perfumaria</h1></div>
+        <div className="catalog-container"></div>
       </div>
       {/* Botões adicionais */}
       <div className="button_clientes">
@@ -21,8 +48,19 @@ function AppHomeCliente() {
         <button onClick={() => navigate('/pedidos')}>Ver Pedidos Feitos</button>
         <button onClick={() => navigate('/')}>Sair</button>
       </div>
+      {error && <p style={{ color: 'red' }}>{error}</p>} {/* Exibe mensagem de erro se houver */}
     </div>
   );
 }
 
 export default AppHomeCliente;
+/*app.get('/cliente/:cpf', (req, res) => {
+  const cpf = req.params.cpf;
+  // Lógica para buscar o cliente pelo CPF no banco de dados
+  const cliente = buscarClientePorCpf(cpf); // Exemplo de função
+  if (cliente) {
+    res.json(cliente); // Retorna os dados do cliente
+  } else {
+    res.status(404).json({ error: 'Cliente não encontrado' });
+  }
+});Usar no backend*/ 

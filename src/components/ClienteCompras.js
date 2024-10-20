@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Importa Axios
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 
 function IniciarCompras() {
   const navigate = useNavigate();
+  const [itens, setItens] = useState([]);
 
-  // Lista de itens disponíveis (pode ser substituída por dados dinâmicos vindos de uma API ou banco de dados)
-  const [itens, setItens] = useState([
-    { id: 1, nome: 'Perfume 1', preco: 100, quantidade: 0, selecionado: false },
-    { id: 2, nome: 'Perfume 2', preco: 150, quantidade: 0, selecionado: false },
-    { id: 3, nome: 'Perfume 3', preco: 200, quantidade: 0, selecionado: false },
-    { id: 4, nome: 'Perfume 4', preco: 250, quantidade: 0, selecionado: false },
-  ]);
+  // Carrega os itens de um backend quando o componente for montado
+  useEffect(() => {
+    const carregarItens = async () => {
+      try {
+        const response = await axios.get('https://api.exemplo.com/produtos'); // Ajuste o endpoint
+        setItens(response.data);
+      } catch (error) {
+        console.error('Erro ao carregar itens:', error);
+      }
+    };
+
+    carregarItens();
+  }, []);
 
   // Função para selecionar/desselecionar um item
   const handleSelectItem = (index) => {
@@ -40,8 +48,6 @@ function IniciarCompras() {
   const handleCheckout = () => {
     const itensSelecionados = itens.filter(item => item.selecionado && item.quantidade > 0);
     if (itensSelecionados.length > 0) {
-      // Passar os itens selecionados para a próxima tela de pagamento
-      console.log('Itens selecionados:', itensSelecionados);
       navigate('/pagamento', { state: { itensSelecionados } });
     } else {
       alert('Por favor, selecione ao menos um item.');
