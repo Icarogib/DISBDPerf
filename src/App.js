@@ -21,10 +21,8 @@ import VendedorEstoque from './components/VendedorEstoque'
 import VendedorEstoqueAlterar from './components/VendedorEstoqueAlterar'
 import VendedorEstoqueCadastrar from './components/VendedorEstoqueCadastrar'
 
-import React from 'react';
-
 //import ClienteList from './components/listaClientes'; // Ajuste o caminho conforme necessário
-//import listaclientes eh para o comentado abaixo.
+//esse import listaclientes eh para o comentado abaixo.
 /*
 function App() {
     return (
