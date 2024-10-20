@@ -1,0 +1,130 @@
+<!-- esse NAO carrega sozinho a lista -->
+ 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Cliente</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        #clientesList {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #clientesList th, #clientesList td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        #clientesList th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastrar Cliente</h1>
+    <form id="clienteForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br>
+
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" name="cpf" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" name="endereco" required><br>
+
+        <label for="cidade">Cidade:</label>
+        <input type="text" id="cidade" name="cidade" required><br>
+
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone" required><br>
+
+        <label for="torce_fla">Torcedor do Flamengo:</label>
+        <input type="checkbox" id="torce_fla" name="torce_fla"><br>
+
+        <button type="submit">Cadastrar Cliente</button>
+    </form>
+    <button id="getAll">Listar Clientes</button>
+
+    <h2>Clientes Cadastrados</h2>
+    <table id="clientesList">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Cidade</th>
+                <th>Telefone</th>
+                <th>Torcedor do Flamengo</th>
+            </tr>
+        </thead>
+        <tbody id="clientesTableBody">
+            <!-- Os dados dos clientes serão inseridos aqui -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('clienteForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            // Captura os dados do formulário
+            const clienteData = {
+                nome: document.getElementById('nome').value,
+                cpf: document.getElementById('cpf').value,
+                email: document.getElementById('email').value,
+                endereco: document.getElementById('endereco').value,
+                cidade: document.getElementById('cidade').value,
+                telefone: document.getElementById('telefone').value,
+                torce_fla: document.getElementById('torce_fla').checked
+            };
+            console.log(clienteData);
+
+            try {
+                // Envia os dados para o backend
+                const response = await axios.post('http://localhost:3001/cliente', clienteData);
+                alert(response.data.message); // Mostra a mensagem de sucesso
+            } catch (error) {
+                console.error('Erro ao cadastrar cliente:', error);
+                alert('Erro ao cadastrar cliente. Tente novamente.');
+            }
+        });
+
+        document.getElementById('getAll').addEventListener('click', async function(event) {
+            try {
+                // Faz a requisição para listar os clientes
+                const response = await axios.get('http://localhost:3001/cliente');
+                const clientes = response.data; // Supondo que a resposta seja uma lista de clientes
+
+                // Limpa a tabela antes de adicionar os novos clientes
+                const clientesTableBody = document.getElementById('clientesTableBody');
+                clientesTableBody.innerHTML = '';
+
+                // Preenche a tabela com os clientes
+                clientes.forEach(cliente => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${cliente.id}</td>
+                        <td>${cliente.nome}</td>
+                        <td>${cliente.cpf}</td>
+                        <td>${cliente.email}</td>
+                        <td>${cliente.endereco}</td>
+                        <td>${cliente.cidade}</td>
+                        <td>${cliente.telefone}</td>
+                        <td>${cliente.torce_fla ? 'Sim' : 'Não'}</td>
+                    `;
+                    clientesTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Erro ao listar clientes:', error);
+                alert('Erro ao listar clientes. Tente novamente.');
+            }
+        });
+    </script>
+</body>
+</html>
