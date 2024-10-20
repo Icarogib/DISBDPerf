@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
+import { useNavigate } from 'react-router-dom';
 
 function DadosPessoais() {
   // Estado inicial com os dados do cliente (esses dados poderiam ser carregados de um backend)
@@ -13,11 +14,12 @@ function DadosPessoais() {
     cidade: 'São Paulo',
     onePieceFan: 'Sim',
   });
-
+  const navigate = useNavigate();
   // Função que será chamada quando o botão de atualização for clicado
   const handleAtualizar = () => {
     // Aqui você pode adicionar a lógica para permitir que o cliente atualize os dados
     alert('Você será redirecionado para atualizar seus dados.');
+    navigate('/changeData')
   };
 
   return (
@@ -36,6 +38,7 @@ function DadosPessoais() {
           <button className="att-button" onClick={handleAtualizar}>
             Atualizar Dados
            </button>
+           <button onClick={() => navigate('/cliente_dashboard')}>Sair</button>
       </div>
      
     </div>

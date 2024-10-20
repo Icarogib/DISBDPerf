@@ -10,6 +10,7 @@ function LoginCliente() {
     if (cpf) {
       // Lógica de autenticação do cliente
       console.log('Cliente autenticado com CPF:', cpf);
+
       navigate('/cliente_dashboard');
     } else {
       alert('Por favor, insira o CPF.');
@@ -26,6 +27,7 @@ function LoginCliente() {
         onChange={(e) => setCpf(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
+      <button onClick={() => navigate('/login')}>Voltar</button>
     </div>
   );
 }

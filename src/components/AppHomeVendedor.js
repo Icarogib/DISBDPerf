@@ -15,10 +15,12 @@ function AppHomeCliente() {
         {/* Aqui você pode adicionar itens do catálogo quando estiver pronto */}
       </div>
       {/* Botões adicionais */}
+      <div className='Nomes'>
       <div className="button_clientes">
         <button onClick={() => navigate('/gerenciar_estoque')}>Gerenciar Estoque</button>
         <button onClick={() => navigate('/autorizar_pedido')}>Gerenciar Pedidos</button>
-        <button onClick={() => navigate('/sair')}>Sair</button>
+        <button onClick={() => navigate('/')}>Sair</button>
+        </div>
       </div>
     </div>
   );

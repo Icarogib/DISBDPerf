@@ -26,6 +26,7 @@ function LoginVendedor() {
         onChange={(e) => setCpf(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
+      <button onClick={() => navigate('/login')}>Voltar</button>
     </div>
   );
 }

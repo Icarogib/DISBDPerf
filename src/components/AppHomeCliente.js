@@ -12,8 +12,6 @@ function AppHomeCliente() {
       <div><h2>Bem-vindo, Cliente {nomeCliente}</h2></div> {/* Mensagem de boas-vindas */}
       <div className='ttPrincipal'><h1>Salsichas's Perfum</h1></div>
       <div className="catalog-container">
-        <h2>Catálogo de Itens</h2>
-        {/* Aqui você pode adicionar itens do catálogo quando estiver pronto */}
       </div>
       </div>
       {/* Botões adicionais */}
@@ -21,7 +19,7 @@ function AppHomeCliente() {
         <button onClick={() => navigate('/iniciar_compras')}>Iniciar Compras</button>
         <button onClick={() => navigate('/dados_pessoais')}>Ver Dados Pessoais</button>
         <button onClick={() => navigate('/pedidos')}>Ver Pedidos Feitos</button>
-        <button onClick={() => navigate('/sair')}>Sair</button>
+        <button onClick={() => navigate('/')}>Sair</button>
       </div>
     </div>
   );

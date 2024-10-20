@@ -10,6 +10,7 @@ function AppHome() {
       <div className='ttPrincipal'><h1>Salsicha's Perfum</h1></div>
       <button onClick={() => navigate('/login_cliente')}>Login de Cliente</button>
       <button onClick={() => navigate('/login_vendedor')}>Login de Vendedor</button>
+      <button onClick={() => navigate('/')}>Sair</button>
     </div>
   );
 }

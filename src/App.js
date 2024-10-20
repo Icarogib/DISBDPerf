@@ -8,6 +8,10 @@ import Login from './components/Login';
 import AppHomeCliente from './components/AppHomeCliente';
 import AppHomeVendedor from './components/AppHomeVendedor';
 import ClienteDadosPessoais from './components/ClienteDadosPessoais';
+import ClienteDadosPessoaisCopy from './components/ClienteDadosPessoaisCopy';
+import ClientePedidos from './components/ClientePedidos';
+import ClienteCompras from './components/ClienteCompras';
+import ClientePagamento from './components/ClientePagamento'
 
 function App() {
   return (
@@ -20,9 +24,12 @@ function App() {
           <Route path="/login_vendedor" element={<LoginVendedor />} />
           {/* Rotas para dashboards após login */}
           <Route path="/cliente_dashboard" element={<AppHomeCliente/>} />
+          <Route path="/iniciar_compras" element={<ClienteCompras/>} />
+          <Route path="/pagamento" element={<ClientePagamento/>} />
           <Route path="/dados_pessoais" element={<ClienteDadosPessoais/>} />
+          <Route path="/changeData" element={<ClienteDadosPessoaisCopy/>} />
+          <Route path="/pedidos" element={<ClientePedidos/>} />
           <Route path="/vendedor_dashboard" element={<AppHomeVendedor/>} />
-          <Route path="/sair" element={<AppHome/>} />
         </Routes>
       </div>
     </Router>

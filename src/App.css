@@ -30,9 +30,15 @@ body {
   font-size: 1.5em;
   margin-inline: 100px;
   color: #0a0a0a;
-
 }
 
+.ttPrincipal1{
+  font-size: 1.5em;
+  margin-inline: 50px;
+  color: #0a0a0a;
+  position: relative;
+  top: -200px;
+}
 .catalog-container{
   margin-inline: 100px;
   position: relative;
@@ -114,4 +120,132 @@ button:hover {
 .ttDP{
   background-color: #1dd816;
   padding: 10px;
+  border-radius: 10px;
+}
+
+.dados-pessoais-container{
+  display: flex;
+  background-color: #ffffff;
+  padding: 75px;
+  flex-direction: column;
+  align-items: center;
+  height: 1000px;
+  justify-content: space-between;
+}
+
+.lista-pedidos-container {
+  display: flex;
+  background-color: #aff3b5;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.pedidos-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.pedidos-tabela th, .pedidos-tabela td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.pedidos-tabela th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.pedidos-tabela td {
+  color: black;
+}
+
+.compras-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.itens-lista {
+  margin-top: 20px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.quantidade-container {
+  display: flex;
+  align-items: center;
+}
+
+.quantidade-container button {
+  margin: 0 10px;
+}
+
+.checkout-button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.pagamento-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.itens-selecionados {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.item span {
+  margin-right: 20px; /* Espaçamento entre as informações do item */
+}
+
+.forma-pagamento {
+  margin-top: 20px;
+}
+
+.finalizar-compra-button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+select {
+  padding: 5px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+h3 {
+  margin-top: 20px;
 }
