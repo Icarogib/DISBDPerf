@@ -1,9 +1,10 @@
 class Venda{
-    constructor(id = null, cliente_id = null, produto_id = null, quantidade_vendida = null) {
+    constructor(id = null, cliente_id = '', vendedor_id = '', data_venda = '', total_venda = '') {
       this.id = id;
       this.cliente_id = cliente_id;
-      this.produto_id = produto_id;
-      this.quantidade_vendida = quantidade_vendida;
+      this.vendedor_id = vendedor_id;
+      this.data_venda = data_venda;
+      this.total_venda = total_venda;
   }
 
   getID(){
@@ -12,11 +13,14 @@ class Venda{
   getClienteID(){
     return this.cliente_id;
   }
-  getProdutoID(){
-    return this.produto_id;
+  getVendedor(){
+    return this.vendedor_id;
   }
-  getQuantidade(){
-    return this.quantidade_vendida;
+  getData(){
+    return this.data_venda;
+  }
+  getTotal(){
+    return this.total_venda;
   }
 
   setID(i){
@@ -25,11 +29,14 @@ class Venda{
   setClienteID(c){
     this.cliente_id = c;
   }
-  setProdutoID(p){
-    this.produto_id = p;
+  setVendedorID(v){
+    this.vendedor_id = v;
   }
-  setQuantidade(q){
-    this.quantidade_vendida = q;
+  setData(d){
+    this.data_venda = d;
+  }
+  setTotal(t){
+    this.total_venda = t;
   }
 }
 

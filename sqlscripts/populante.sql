@@ -1,33 +1,24 @@
-INSERT INTO cliente (nome, endereco, telefone) VALUES ('Maicon', 'Rua Jackson', 33431134);
+insert into cliente
+values (null, 'Joao', 2035552, 'joaomaria@teste.com', 'rua floripa', 'rabuge', '888551112', true);
 
-INSERT INTO cliente (nome, endereco, telefone) VALUES ('Julius', 'Rua Chris', 33421334);
+insert into cliente
+values (null,  'Latrel', 65121, 'latrel@kent.com', 'rua kekekrs', 'sorocaba', '35735342', false);
 
-INSERT INTO cliente (nome, endereco, telefone) VALUES ('Baki', 'Av. Hanma', 99999999);
+insert into vendedor
+values(null, 'Ivana', 25424, 'vende1@vendeu.com', '35264643');
 
-INSERT INTO cliente (nome, endereco, telefone) VALUES ('Kuririn', 'Av. Terra', 40028922);
+insert into vendedor
+values(null, 'Mioma', 564234, 'vende2@vendeu.com', '6546523');
 
-INSERT INTO cliente (nome, endereco, telefone) VALUES ('Gabi', 'Av. Gol', 08007778000);
+insert into produto
+values(null, 'Macaque', 'Cheiro de macaco', 122, 'verde', 'araraquara', 20);
 
-INSERT INTO cliente (nome, endereco, telefone) VALUES ('Kame', 'Rua Hame Ha', 998077335);
+insert into produto
+values(null, 'Plantis', 'Cheiro de plantae', 24, 'musgo', 'jaboatao', 10);
 
-INSERT INTO cliente (nome, endereco, telefone) VALUES ('Luffy', 'Vila Fuusha', 14143200);
+insert into venda
+values (null, 1, 1, '23/02/2022', 30.2);
 
-INSERT INTO cliente (nome, endereco, telefone) VALUES ('Marcelo', 'Rua Yuri', 123456789);
+insert into venda
+values (null, 1, 2, '15/08/2024', 24.3);
 
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume Essencial Oud', 130, 10 );
-
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume Biografia Assinatura ', 100 , 10 );
-
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume Homem Essence', 120, 10 );
-
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume Malbec Icon', 150 , 10 );
-
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume Kaiak Urbe', 85, 10);
-
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume Egeo Beat', 100 , 10);
-
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume The Blend Bourbon', 280, 10);
-
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume Arbo', 100 , 10);
-
-INSERT INTO estoque (nome_produto, preco, quantidade) VALUES ('Perfume Humor a Rigor', 85, 10);

@@ -6,16 +6,16 @@ class CRUD {
     inserir(table, data, callback) {
       //a tabela vendas possue um tratamento especial para verificar se o produto que sera vendido eh possivel
       //Se a quantidade a ser vendida eh maior que a disponivel no estoque, a venda nao eh concluida
-      if (table === 'vendas') {
+      if (table === 'item_venda') {
         const { produto_id, quantidade_vendida } = data;
 
         // Verifica a quantidade disponível no estoque
-        const sqlEstoque = `SELECT (estoque.quantidade - IFNULL(SUM(vendas.quantidade_vendida), 0)) AS quantidade_restante
+        const sqlEstoque = `SELECT (produto.estoque - IFNULL(SUM(item_venda.quantidade), 0)) AS quantidade_restante
                             FROM estoque
-                            LEFT JOIN vendas ON estoque.id = vendas.produto_id
-                            WHERE estoque.id = ?
+                            LEFT JOIN vendas ON produto.id = item_venda.produto_id
+                            WHERE produto.id = ?
                             GROUP BY
-                            estoque.quantidade`;
+                            produto.estoque`;
         //O comando em SQL acima seleciona a quantidade restante de um produto especifico no estoque
         // A funcao IFNULL eh usada para garantir que, se nao houver vendas registradas para aquele produto,
         // a soma das quantidades vendidas sera considerada como 0, em vez de NULL.

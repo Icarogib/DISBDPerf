@@ -1,11 +1,15 @@
+const cors = require('cors');
+const mysql = require('mysql2');
 const express = require('express');
 const bodyParser = require('body-parser');
-const CRUD = require('./CRUD');
-const Cliente = require('./cliente');
+const Forma_pagamento = require('./Forma_pagamento');
+const Item_Venda = require('./Item_venda');
+const Pagamento = require('./Pagamento');
+const Vendedor = require('./Vendedor');
+const Cliente = require('./Cliente');
 const Produto = require('./Produto');
 const Venda = require('./Venda');
-const mysql = require('mysql2');
-const cors = require('cors')
+const CRUD = require('./CRUD');
 
 const corsOption = {
     origin: ['http://127.0.0.1:5500', 'http://localhost:3000'],
@@ -35,8 +39,10 @@ app.use(bodyParser.json()); // Middleware para processar JSON no corpo das requi
 
 app.use(cors(corsOption));
 
-
+/* ==========================================================================
 // Rotas CRUD para cliente
+*/
+
 app.get('/cliente', (req, res) => {
   const crud = new CRUD(connection);
   crud.listar('cliente', (cliente) => {
@@ -77,7 +83,10 @@ app.delete('/cliente/:id', (req, res) => {
   });
 });
 
+/* ==========================================================================
 // Rotas CRUD para vendedor
+*/
+
 app.get('/vendedor', (req, res) => {
   const crud = new CRUD(connection);
   crud.listar('vendedor', (vendedor) => {
@@ -88,7 +97,7 @@ app.get('/vendedor', (req, res) => {
 app.post('/vendedor', (req, res) => {
   const crud = new CRUD(connection);
   const { nome, cpf, email, telefone } = req.body;
-  const vendedor = new vendedor(null, nome, cpf, email, telefone );
+  const vendedor = new Vendedor(null, nome, cpf, email, telefone );
   crud.inserir('vendedor', vendedor, (result) => {
     res.json({ message: 'Vendedor inserido com sucesso', id: result.insertId });
   });
@@ -98,7 +107,7 @@ app.put('/vendedor/:id', (req, res) => {
   const crud = new CRUD(connection);
   const { id } = req.params;
   const { nome, cpf, email, telefone, } = req.body;
-  const vendedorAtualizado = new vendedor(id, nome, cpf, email, telefone );
+  const vendedorAtualizado = new Vendedor(id, nome, cpf, email, telefone );
   crud.atualizar('vendedor', id, vendedorAtualizado, (result) => {
     if(result.affectedRows == 0)
         res.json({ message: 'Vendedor não encontrado' });
@@ -118,14 +127,17 @@ app.delete('/vendedor/:id', (req, res) => {
   });
 });
 
-// Rotas CRUD para Estoque
+/* ==========================================================================
+// Rotas CRUD para produtos
+*/
+
 app.get('/produto', (req, res) => {
   const crud = new CRUD(connection);
   crud.listar('produto', (produtos) => {
     if (produtos == null)
         console.log("Nao há produtos.");
     else
-        console.log(produtos);
+       // console.log(produtos);
     res.json(produtos);
   });
 });
@@ -160,6 +172,203 @@ app.delete('/produto/:id', (req, res) => {
         res.json({ message: 'Produto não encontrado' });
     else
     res.json({ message: 'Produto removido com sucesso' });
+  });
+});
+
+/* ==========================================================================
+// Rotas CRUD para venda 
+// erro se colocar vendedor/cliente que nao existe!
+*/
+
+app.get('/venda', (req, res) => {
+  const crud = new CRUD(connection);
+  crud.listar('venda', (vendas) => {
+    if (vendas == null)
+        console.log("Nao há vendas.");
+    else
+        //console.log(vendas);
+    res.json(vendas);
+  });
+});
+
+app.post('/venda', (req, res) => {
+  const crud = new CRUD(connection);
+  const { cliente_id, vendedor_id, data_venda, total_venda } = req.body;
+  const venda = new Venda(null, parseInt(cliente_id), parseInt(vendedor_id), data_venda, parseFloat(total_venda));
+  crud.inserir('venda', venda, (result) => {
+    res.json({ message: 'Venda inserido com sucesso', id: result.insertId });
+  });
+});
+
+app.put('/venda/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  const { cliente_id, vendedor_id, data_venda, total_venda } = req.body;
+  const vendaAtualizado = new Venda(id, parseInt(cliente_id), parseInt(vendedor_id), data_venda, parseFloat(total_venda));
+  crud.atualizar('venda', id, vendaAtualizado, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'Venda não encontrada' });
+    else
+        res.json({ message: 'Venda atualizado com sucesso' });
+  });
+});
+
+app.delete('/venda/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  crud.deletar('venda', id, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'Venda não encontrado' });
+    else
+    res.json({ message: 'Venda removido com sucesso' });
+  });
+});
+
+/* ==========================================================================
+// Rotas CRUD para item_venda
+// Alterar CRUD para verificar quantidade vendida
+*/
+
+app.get('/item_venda', (req, res) => {
+  const crud = new CRUD(connection);
+  crud.listar('item_venda', (item_vendas) => {
+    if (item_vendas == null)
+        console.log("Nao há itens vendidos com esse ID.");
+    else
+        //console.log(item_vendas);
+    res.json(item_vendas);
+  });
+});
+
+app.post('/item_venda', (req, res) => {
+  const crud = new CRUD(connection);
+  const { venda_id, produto_id, quantidade, preco_unitario } = req.body;
+  const item_venda = new Item_Venda( null, venda_id, produto_id, parseInt(quantidade), parseFloat(preco_unitario) );
+  crud.inserir('item_venda', item_venda, (result) => {
+    res.json({ message: 'Itens vendidos inseridos com sucesso', id: result.insertId });
+  });
+});
+
+app.put('/item_venda/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  const { venda_id, produto_id, quantidade, preco_unitario  } = req.body;
+  const item_vendaAtualizado = new Item_Venda(id, venda_id, produto_id, parseInt(quantidade), parseFloat(preco_unitario) );
+  crud.atualizar('item_venda', id, item_vendaAtualizado, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'Item vendido não encontrada' });
+    else
+        res.json({ message: 'Item vendido atualizado com sucesso' });
+  });
+});
+
+app.delete('/item_venda/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  crud.deletar('item_venda', id, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'Item vendido não encontrado' });
+    else
+    res.json({ message: 'Item vendido removido com sucesso' });
+  });
+});
+
+/* ==========================================================================
+// Rotas CRUD para forma_pagamento
+// ate agora desnecessaria, já vem no BD
+*/
+/*
+app.get('/forma_pagamento', (req, res) => {
+  const crud = new CRUD(connection);
+  crud.listar('forma_pagamento', (forma_pagamentos) => {
+    if (forma_pagamentos == null)
+        console.log("Nao há forma_pagamentos.");
+    else
+        console.log(forma_pagamentos);
+    res.json(forma_pagamentos);
+  });
+});
+
+app.post('/forma_pagamento', (req, res) => {
+  const crud = new CRUD(connection);
+  const { forma_pagamento_id, descricao, status_pagamento } = req.body;
+  const forma_pagamento = new Forma_pagamento( parseInt(forma_pagamento_id), descricao, status_pagamento);
+  crud.inserir('forma_pagamento', forma_pagamento, (result) => {
+    res.json({ message: 'forma_pagamento inserido com sucesso', id: result.insertId });
+  });
+});
+
+app.put('/forma_pagamento/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  const { forma_pagamento_id, descricao, status_pagamento } = req.body;
+  const forma_pagamentoAtualizado = new Forma_pagamento( parseInt(forma_pagamento_id), descricao, status_pagamento );
+  crud.atualizar('forma_pagamento', id, forma_pagamentoAtualizado, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'forma_pagamento não encontrado' });
+    else
+        res.json({ message: 'forma_pagamento atualizado com sucesso' });
+  });
+});
+
+app.delete('/forma_pagamento/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  crud.deletar('forma_pagamento', id, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'forma_pagamento não encontrado' });
+    else
+    res.json({ message: 'forma_pagamento removido com sucesso' });
+  });
+});
+*/
+
+/* ==========================================================================
+// Rotas CRUD para pagamento
+// 
+*/
+
+app.get('/pagamento', (req, res) => {
+  const crud = new CRUD(connection);
+  crud.listar('pagamento', (pagamentos) => {
+    if (pagamentos == null)
+        console.log("Nao há pagamentos.");
+    else
+        //console.log(pagamentos);
+    res.json(pagamentos);
+  });
+});
+
+app.post('/pagamento', (req, res) => {
+  const crud = new CRUD(connection);
+  const { venda_id, forma_pagamento_id, data_pagamento, status_pagamento } = req.body;
+  const pagamento = new Pagamento(null, parseInt(venda_id), parseInt(forma_pagamento_id), data_pagamento, status_pagamento);
+  crud.inserir('pagamento', pagamento, (result) => {
+    res.json({ message: 'Pagamento inserido com sucesso', id: result.insertId });
+  });
+});
+
+app.put('/pagamento/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  const { venda_id, forma_pagamento_id, data_pagamento, status_pagamento } = req.body;
+  const pagamentoAtualizado = new Pagamento(id, parseInt(venda_id), parseInt(forma_pagamento_id), data_pagamento, status_pagamento);
+  crud.atualizar('pagamento', id, pagamentoAtualizado, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'Pagamento não encontrado' });
+    else
+        res.json({ message: 'Pagamento atualizado com sucesso' });
+  });
+});
+
+app.delete('/pagamento/:id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { id } = req.params;
+  crud.deletar('pagamento', id, (result) => {
+    if(result.affectedRows == 0)
+        res.json({ message: 'Pagamento não encontrado' });
+    else
+    res.json({ message: 'Pagamento removido com sucesso' });
   });
 });
 
