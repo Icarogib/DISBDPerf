@@ -1,33 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-function DadosPessoais() {
-  // Estado inicial com os dados do cliente (esses dados poderiam ser carregados de um backend)
-  const [dadosCliente, setDadosCliente] = useState({
-    nome: 'João da Silva',
-    cpf: '123.456.789-00',
-    email: 'joao.silva@email.com',
-    telefone: '(11) 98765-4321',
-    endereco: 'Rua Exemplo, 123',
-    timeTorce: 'São Paulo FC',
-    cidade: 'São Paulo',
-    onePieceFan: 'Sim',
-  });
-
-  const [editando, setEditando] = useState(true); // Estado para saber se o usuário está em modo de edição
-
+function ChangeData() {
+  const [dadosCliente, setDadosCliente] = useState(null);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Função para salvar as alterações
-  const handleSalvar = () => {
-    // Aqui você pode adicionar a lógica para salvar os dados (no backend, por exemplo)
-    setEditando(false);
-    alert('Dados atualizados com sucesso!');
-    navigate('/dados_pessoais')
+  // UseEffect para carregar os dados do cliente
+  useEffect(() => {
+    const fetchDadosCliente = async () => {
+      try {
+        const cpf = localStorage.getItem('clienteCpf');
+        if (!cpf) {
+          navigate('/login');
+          return;
+        }
+        const response = await axios.get(`http://localhost:3001/clientes/${cpf}`);
+        setDadosCliente(response.data);
+      } catch (err) {
+        setError('Erro ao carregar dados do cliente.');
+        console.error('Erro ao buscar dados:', err);
+      }
+    };
+
+    fetchDadosCliente();
+  }, [navigate]);
+
+  // Função para salvar os dados atualizados
+  const handleSalvar = async () => {
+    try {
+      const cpf = localStorage.getItem('clienteCpf');
+      if (!cpf) {
+        navigate('/login');
+        return;
+      }
+      await axios.put(`http://localhost:3001/clientes/${cpf}`, dadosCliente);
+      alert('Dados atualizados com sucesso!');
+      navigate('/dados_pessoais'); // Redireciona após salvar
+    } catch (err) {
+      setError('Erro ao salvar os dados. Tente novamente.');
+      console.error('Erro ao salvar dados:', err);
+    }
   };
 
-  // Função para lidar com mudanças nos campos de input
+  // Função para lidar com as alterações nos campos de input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDadosCliente({
@@ -39,72 +57,43 @@ function DadosPessoais() {
   return (
     <div className="dados-pessoais-container">
       <div className="dados-pessoais">
-        <div className="ttDP"><h2>Dados Pessoais</h2></div>
-        <div className="dados">
-          <p><strong>Nome:</strong> 
-            {editando ? (
+        <div className="ttDP"><h2>Atualizar Dados Pessoais</h2></div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {dadosCliente ? (
+          <div className="dados">
+            <p><strong>Nome:</strong>
               <input type="text" name="nome" value={dadosCliente.nome} onChange={handleChange} />
-            ) : (
-              dadosCliente.nome
-            )}
-          </p>
-          <p><strong>CPF:</strong> 
-            {editando ? (
+            </p>
+            <p><strong>CPF:</strong>
               <input type="text" name="cpf" value={dadosCliente.cpf} onChange={handleChange} />
-            ) : (
-              dadosCliente.cpf
-            )}
-          </p>
-          <p><strong>Email:</strong> 
-            {editando ? (
+            </p>
+            <p><strong>Email:</strong>
               <input type="email" name="email" value={dadosCliente.email} onChange={handleChange} />
-            ) : (
-              dadosCliente.email
-            )}
-          </p>
-          <p><strong>Telefone:</strong> 
-            {editando ? (
+            </p>
+            <p><strong>Telefone:</strong>
               <input type="text" name="telefone" value={dadosCliente.telefone} onChange={handleChange} />
-            ) : (
-              dadosCliente.telefone
-            )}
-          </p>
-          <p><strong>Endereço:</strong> 
-            {editando ? (
+            </p>
+            <p><strong>Endereço:</strong>
               <input type="text" name="endereco" value={dadosCliente.endereco} onChange={handleChange} />
-            ) : (
-              dadosCliente.endereco
-            )}
-          </p>
-          <p><strong>Time que Torce:</strong> 
-            {editando ? (
+            </p>
+            <p><strong>Time que Torce:</strong>
               <input type="text" name="timeTorce" value={dadosCliente.timeTorce} onChange={handleChange} />
-            ) : (
-              dadosCliente.timeTorce
-            )}
-          </p>
-          <p><strong>Cidade:</strong> 
-            {editando ? (
+            </p>
+            <p><strong>Cidade:</strong>
               <input type="text" name="cidade" value={dadosCliente.cidade} onChange={handleChange} />
-            ) : (
-              dadosCliente.cidade
-            )}
-          </p>
-          <p><strong>OnePieceFan:</strong> 
-            {editando ? (
+            </p>
+            <p><strong>One Piece Fan:</strong>
               <input type="text" name="onePieceFan" value={dadosCliente.onePieceFan} onChange={handleChange} />
-            ) : (
-              dadosCliente.onePieceFan
-            )}
-          </p>
-        </div>
-
+            </p>
+          </div>
+        ) : (
+          <p>Carregando dados do cliente...</p>
+        )}
         <button className="att-button" onClick={handleSalvar}>Salvar Dados</button>
-
-        <button onClick={() => navigate('/dados_pessoais')}>Sair</button>
+        <button onClick={() => navigate('/dados_pessoais')}>Cancelar</button>
       </div>
     </div>
   );
 }
 
-export default DadosPessoais;
+export default ChangeData;
