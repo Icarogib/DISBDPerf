@@ -12,6 +12,14 @@ import ClienteDadosPessoaisCopy from './components/ClienteDadosPessoaisCopy';
 import ClientePedidos from './components/ClientePedidos';
 import ClienteCompras from './components/ClienteCompras';
 import ClientePagamento from './components/ClientePagamento'
+import VendedorPedidos from './components/VendedorPedidos'
+import VendedorCliente from './components/VendedorCliente'
+import VendedorClienteCadastrar from './components/VendedorClienteCadastrar'
+import VendedorClienteRemover from './components/VendedorClienteRemover'
+import VendedorClienteListar from './components/VendedorClienteListar'
+import VendedorEstoque from './components/VendedorEstoque'
+import VendedorEstoqueAlterar from './components/VendedorEstoqueAlterar'
+import VendedorEstoqueCadastrar from './components/VendedorEstoqueCadastrar'
 
 function App() {
   return (
@@ -30,6 +38,14 @@ function App() {
           <Route path="/changeData" element={<ClienteDadosPessoaisCopy/>} />
           <Route path="/pedidos" element={<ClientePedidos/>} />
           <Route path="/vendedor_dashboard" element={<AppHomeVendedor/>} />
+          <Route path="/gerenciar_cliente" element={<VendedorCliente/>} />
+          <Route path="/cadastrar_cliente" element={<VendedorClienteCadastrar/>} />
+          <Route path="/remover_cliente" element={<VendedorClienteRemover/>} />
+          <Route path="/listar_clientes" element={<VendedorClienteListar/>} />
+          <Route path="/gerenciar_estoque" element={<VendedorEstoque/>} />
+          <Route path="/alterar_produto" element={<VendedorEstoqueAlterar/>} />
+          <Route path="/cadastrar_produto" element={<VendedorEstoqueCadastrar/>} />
+          <Route path="/autorizar_pedido" element={<VendedorPedidos/>} />        
         </Routes>
       </div>
     </Router>

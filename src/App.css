@@ -13,6 +13,7 @@ body {
   text-align: center;
   background-color: #ffffff;
   border-radius: 10px;
+  padding: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   
 }
@@ -63,6 +64,7 @@ button:hover {
   background-color: #45a049;
 }
 
+/*Login*/
 .container, .login-container {
   display: flex;
   flex-direction: column;
@@ -123,6 +125,7 @@ button:hover {
   border-radius: 10px;
 }
 
+/*Listar os dados pessoais do cliente*/
 .dados-pessoais-container{
   display: flex;
   background-color: #ffffff;
@@ -164,6 +167,7 @@ button:hover {
   color: black;
 }
 
+/*Gerenciar as compras, quais itens o cliente deseja comprar*/
 .compras-container {
   padding: 20px;
   display: flex;
@@ -201,6 +205,7 @@ button:hover {
   cursor: pointer;
 }
 
+/*Cliente: Pagamento das compras*/
 .pagamento-container {
   padding: 20px;
   display: flex;
@@ -248,4 +253,317 @@ select {
 
 h3 {
   margin-top: 20px;
+}
+
+/*Gerenciar pedidos pendentes de confirmação*/
+.gerenciar-pedidos-container {
+  padding: 20px;
+  
+}
+
+.pedido {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.pedido p {
+  margin: 5px 0;
+}
+
+.botoes-acao {
+  margin-top: 10px;
+}
+
+.confirmar-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancelar-button {
+  background-color: #f44336;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmar-button:hover,
+.cancelar-button:hover {
+  opacity: 0.8;
+}
+
+/* Estilos para a tela de Gerenciar Clientes */
+.gerenciar-clientes-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.gerenciar-clientes-title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.gerenciar-clientes-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gerenciar-clientes-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.gerenciar-clientes-button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para a tela de Gerenciar Produtos */
+.gerenciar-produtos-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.gerenciar-produtos-title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.gerenciar-produtos-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gerenciar-produtos-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.gerenciar-produtos-button:hover {
+  background-color: #218838;
+}
+
+/*Remover Cliente(Vendedor)*/
+
+.remover-cliente-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.buscar-cpf-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.buscar-cpf-container input {
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.buscar-cpf-container button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dados-cliente-encontrado {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.dados-cliente-encontrado p {
+  margin: 5px 0;
+}
+
+.dados-cliente-encontrado button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/*Listar Clientes(Vendedor)*/
+
+.listar-clientes-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.tabela-clientes {
+  width: 80%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.tabela-clientes th, .tabela-clientes td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.tabela-clientes th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.tabela-clientes tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.tabela-clientes tr:hover {
+  background-color: #ddd;
+}
+
+
+.alterar-estoque-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.busca-input {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.lista-itens-estoque {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.item-estoque {
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.input-alterar {
+  width: 100px;
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.btn-alterar {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-alterar:hover {
+  background-color: #45a049;
+}
+
+p {
+  margin: 5px 0;
+}
+
+/*Vendedor cadastro produto*/
+.cadastrar-produto-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cadastrar-produto-container h2 {
+  text-align: center;
+  color: #333;
+}
+
+.cadastrar-produto-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.cadastrar-produto-container label {
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.cadastrar-produto-container input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.cadastrar-produto-container input[type="checkbox"] {
+  margin: 10px 0;
+}
+
+.cadastrar-produto-container button {
+  padding: 10px;
+  background-color: #28a745; /* Verde */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.cadastrar-produto-container button:hover {
+  background-color: #218838; /* Verde mais escuro ao passar o mouse */
 }

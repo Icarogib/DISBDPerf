@@ -10,7 +10,7 @@ function AppHomeCliente() {
     <div className="container">
       <div>
       <div><h2>Bem-vindo, Cliente {nomeCliente}</h2></div> {/* Mensagem de boas-vindas */}
-      <div className='ttPrincipal'><h1>Salsichas's Perfum</h1></div>
+      <div className='ttPrincipal'><h1>Salsichas's Perfumaria</h1></div>
       <div className="catalog-container">
       </div>
       </div>
