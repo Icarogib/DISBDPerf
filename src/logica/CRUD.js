@@ -116,6 +116,19 @@ class CRUD {
         callback(results);
       });
     }
+
+    pesquisarPorCpf(table, cpf, callback) {//Seleciona todo o conteudo da tabela no qual o CPF eh igual o passado no parametro
+      const sql = `SELECT * FROM ${table} WHERE cpf = ?`;
+      this.connection.query(sql, [cpf], (err, results) => {
+        if (err) {
+          console.error('Erro ao buscar cliente por CPF:', err);
+          callback([]);
+        } else {
+          console.log(results);
+          callback(results);
+        }
+      });
+    }
   
     atualizar(table, id, data, callback) {
       const keys = Object.keys(data);

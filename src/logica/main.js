@@ -35,9 +35,8 @@ connection.connect((err) => {
 
 const app = express();
 app.use(bodyParser.json()); // Middleware para processar JSON no corpo das requisições
+app.use(cors());
 
-
-app.use(cors(corsOption));
 
 /* ==========================================================================
 // Rotas CRUD para cliente
@@ -49,6 +48,26 @@ app.get('/cliente', (req, res) => {
     res.json(cliente);
   });
 });
+
+app.post('/login_cliente', (req, res) => {
+  const crud = new CRUD(connection);
+  const { cpf } = req.body;
+
+  // Verifica se o CPF foi fornecido
+  if (!cpf) {
+    return res.status(400).json({ success: false, message: 'CPF é obrigatório' });
+  }
+
+  // Pesquisa o cliente no banco de dados com base no CPF
+  crud.pesquisarPorCpf('cliente', parseInt(cpf), (result) => {
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: 'Cliente não encontrado' });
+    } else {
+      return res.status(200).json({ success: true, message: 'Login bem-sucedido', cliente: result[0] });
+    }
+  });
+});
+
 
 app.post('/cliente', (req, res) => {
   const crud = new CRUD(connection);
