@@ -4,7 +4,7 @@ class CRUD {
     }
 
     inserir(table, data, callback) {
-      //a tabela vendas possue um tratamento especial para verificar se o produto que sera vendido eh possivel
+      /*//a tabela vendas possue um tratamento especial para verificar se o produto que sera vendido eh possivel
       //Se a quantidade a ser vendida eh maior que a disponivel no estoque, a venda nao eh concluida
       if (table === 'item_venda') {
         const { produto_id, quantidade_vendida } = data;
@@ -50,7 +50,7 @@ class CRUD {
             callback(null, { error: 'Produto não encontrado.' });
           }
         });
-      } else {
+      } else {*/
         // Insere para outras tabelas que não sejam vendas
         const keys = Object.keys(data);
         const values = Object.values(data);
@@ -59,7 +59,7 @@ class CRUD {
           if (err) throw err;
           callback(results);
         });
-      }
+      //}
     }
 
   

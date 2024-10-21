@@ -6,6 +6,7 @@ function Pagamento() {
   const location = useLocation();
   const navigate = useNavigate();
   const { itensSelecionados } = location.state || { itensSelecionados: [] };
+  const venda_id = localStorage.getItem('vendaId');
 
   const [formaPagamento, setFormaPagamento] = useState('');
 
@@ -20,17 +21,20 @@ function Pagamento() {
       alert('Por favor, selecione uma forma de pagamento.');
       return;
     }
+    const data_pag = new Date().toISOString().slice(0, 10); // Data no formato YYYY-MM-DD
+    const status = 'aguardando';
 
     const dadosCompra = {
-      itens: itensSelecionados,
-      total: calcularTotal(),
-      formaPagamento,
+      venda_id,
+      forma_pagamento_id: formaPagamento,
+      data_pag,
+      status
     };
 
     try {
       // Enviar dados da compra para o backend
-      await axios.post('https://api.exemplo.com/checkout', dadosCompra); // Ajuste o endpoint
-      alert(`Compra finalizada com sucesso usando ${formaPagamento}!`);
+      await axios.post('http://localhost:3001/pagamento', dadosCompra); // Ajuste o endpoint
+      alert(`Compra finalizada com sucesso!`);
       navigate('/cliente_dashboard'); // Redireciona de volta à página inicial após a compra
     } catch (error) {
       console.error('Erro ao finalizar a compra:', error);
@@ -59,11 +63,11 @@ function Pagamento() {
         <h3>Selecione a Forma de Pagamento</h3>
         <select value={formaPagamento} onChange={(e) => setFormaPagamento(e.target.value)}>
           <option value="">Selecione</option>
-          <option value="boleto">Boleto</option>
-          <option value="cartao_debito">Cartão de Débito</option>
-          <option value="cartao_credito">Cartão de Crédito</option>
-          <option value="pix">Pix</option>
-          <option value="berries">Berries</option>
+          <option value="1">Boleto</option>
+          <option value="2">Cartão de Débito</option>
+          <option value="3">Cartão de Crédito</option>
+          <option value="4">Pix</option>
+          <option value="5">Berries</option>
         </select>
       </div>
 
