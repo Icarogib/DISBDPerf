@@ -68,6 +68,25 @@ app.post('/login_cliente', (req, res) => {
   });
 });
 
+app.get('/cliente/:cpf', (req, res) => {
+  const crud = new CRUD(connection);
+  const { cpf } = req.params;
+
+  // Verifica se o CPF foi fornecido
+  if (!cpf) {
+    return res.status(400).json({ success: false, message: 'CPF é obrigatório' });
+  }
+
+  // Pesquisa o cliente no banco de dados com base no CPF
+  crud.pesquisarPorCpf('cliente', parseInt(cpf), (result) => {
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: 'Cliente não encontrado' });
+    } else {
+      return res.status(200).json({ success: true, message: 'Cliente encontrado', cliente: result[0] });
+    }
+  });
+});
+
 
 app.post('/cliente', (req, res) => {
   const crud = new CRUD(connection);
@@ -110,6 +129,44 @@ app.get('/vendedor', (req, res) => {
   const crud = new CRUD(connection);
   crud.listar('vendedor', (vendedor) => {
     res.json(vendedor);
+  });
+});
+
+app.post('/login_vendedor', (req, res) => {
+  const crud = new CRUD(connection);
+  const { cpf } = req.body;
+
+  // Verifica se o CPF foi fornecido
+  if (!cpf) {
+    return res.status(400).json({ success: false, message: 'CPF é obrigatório' });
+  }
+
+  // Pesquisa o vendedor no banco de dados com base no CPF
+  crud.pesquisarPorCpf('vendedor', parseInt(cpf), (result) => {
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: 'Vendedor não encontrado' });
+    } else {
+      return res.status(200).json({ success: true, message: 'Login bem-sucedido', vendedor: result[0] });
+    }
+  });
+});
+
+app.get('/vendedor/:cpf', (req, res) => {
+  const crud = new CRUD(connection);
+  const { cpf } = req.params;
+
+  // Verifica se o CPF foi fornecido
+  if (!cpf) {
+    return res.status(400).json({ success: false, message: 'CPF é obrigatório' });
+  }
+
+  // Pesquisa o vendedor no banco de dados com base no CPF
+  crud.pesquisarPorCpf('vendedor', parseInt(cpf), (result) => {
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: 'Vendedor não encontrado' });
+    } else {
+      return res.status(200).json({ success: true, message: 'Login bem-sucedido', vendedor: result[0] });
+    }
   });
 });
 

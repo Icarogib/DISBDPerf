@@ -124,7 +124,7 @@ class CRUD {
           console.error('Erro ao buscar cliente por CPF:', err);
           callback([]);
         } else {
-          console.log(results);
+          //console.log(results);
           callback(results);
         }
       });

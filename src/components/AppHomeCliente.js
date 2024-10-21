@@ -18,11 +18,16 @@ function AppHomeCliente() {
       return;
     }
 
-    // Busca o nome do cliente com base no CPF
+    // Busca os dados do cliente com base no CPF
     const fetchCliente = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/cliente/${cpf}`);
-        setNomeCliente(response.data.nome); // Atualiza o nome do cliente com os dados recebidos
+        // Verifica se a resposta foi bem-sucedida
+        if (response.data.success) {
+          setNomeCliente(response.data.cliente.nome); // Atualiza o nome do cliente com os dados recebidos
+        } else {
+          setError(response.data.message);
+        }
       } catch (err) {
         console.error('Erro ao buscar dados do cliente:', err);
         setError('Erro ao carregar informações do cliente.');
@@ -35,9 +40,7 @@ function AppHomeCliente() {
   return (
     <div className="container">
       <div>
-        <div>
-          <h2>Bem-vindo, Cliente {nomeCliente}</h2> {/* Mensagem de boas-vindas com nome real */}
-        </div>
+        <h2>Bem-vindo, Cliente {nomeCliente}</h2> {/* Mensagem de boas-vindas com nome real */}
         <div className='ttPrincipal'><h1>Salsichas's Perfumaria</h1></div>
         <div className="catalog-container"></div>
       </div>
@@ -54,13 +57,3 @@ function AppHomeCliente() {
 }
 
 export default AppHomeCliente;
-/*app.get('/cliente/:cpf', (req, res) => {
-  const cpf = req.params.cpf;
-  // Lógica para buscar o cliente pelo CPF no banco de dados
-  const cliente = buscarClientePorCpf(cpf); // Exemplo de função
-  if (cliente) {
-    res.json(cliente); // Retorna os dados do cliente
-  } else {
-    res.status(404).json({ error: 'Cliente não encontrado' });
-  }
-});Usar no backend*/ 
