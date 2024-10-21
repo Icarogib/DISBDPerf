@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Importa Axios
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function Pagamento() {
   const location = useLocation();
   const navigate = useNavigate();
   const { itensSelecionados } = location.state || { itensSelecionados: [] };
+  const venda_id = localStorage.getItem('vendaId');
 
-  // Estado para armazenar a forma de pagamento selecionada
   const [formaPagamento, setFormaPagamento] = useState('');
 
   // Calcular o total
@@ -15,15 +16,30 @@ function Pagamento() {
   };
 
   // Função para finalizar o pagamento
-  const handleFinalizarCompra = () => {
+  const handleFinalizarCompra = async () => {
     if (!formaPagamento) {
       alert('Por favor, selecione uma forma de pagamento.');
       return;
     }
+    const data_pag = new Date().toISOString().slice(0, 10); // Data no formato YYYY-MM-DD
+    const status = 'aguardando';
 
-    // Aqui você pode adicionar a lógica de finalização da compra com base na forma de pagamento
-    alert(`Compra finalizada com sucesso usando ${formaPagamento}!`);
-    navigate('/cliente_dashboard'); // Redireciona de volta à página inicial após a compra
+    const dadosCompra = {
+      venda_id,
+      forma_pagamento_id: formaPagamento,
+      data_pag,
+      status
+    };
+
+    try {
+      // Enviar dados da compra para o backend
+      await axios.post('http://localhost:3001/pagamento', dadosCompra); // Ajuste o endpoint
+      alert(`Compra finalizada com sucesso!`);
+      navigate('/cliente_dashboard'); // Redireciona de volta à página inicial após a compra
+    } catch (error) {
+      console.error('Erro ao finalizar a compra:', error);
+      alert('Ocorreu um erro ao finalizar a compra. Tente novamente.');
+    }
   };
 
   return (
@@ -47,11 +63,11 @@ function Pagamento() {
         <h3>Selecione a Forma de Pagamento</h3>
         <select value={formaPagamento} onChange={(e) => setFormaPagamento(e.target.value)}>
           <option value="">Selecione</option>
-          <option value="boleto">Boleto</option>
-          <option value="cartao_debito">Cartão de Débito</option>
-          <option value="cartao_credito">Cartão de Crédito</option>
-          <option value="pix">Pix</option>
-          <option value="berries">Berries</option>
+          <option value="1">Boleto</option>
+          <option value="2">Cartão de Débito</option>
+          <option value="3">Cartão de Crédito</option>
+          <option value="4">Pix</option>
+          <option value="5">Berries</option>
         </select>
       </div>
 

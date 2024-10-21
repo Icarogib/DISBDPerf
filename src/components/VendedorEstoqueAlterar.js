@@ -1,39 +1,57 @@
 import React, { useState } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Importação do Axios
 
 function AlterarEstoque() {
   const navigate = useNavigate();
-  const [itensEstoque, setItensEstoque] = useState([
-    // Exemplo de itens que poderiam vir do banco de dados
-    { id: 1, nome: 'Perfume A', descricao: 'Aroma floral', preco: 100.00, categoria: 'Perfume', fabricado_em_mari: true, estoque: 50 },
-    { id: 2, nome: 'Perfume B', descricao: 'Aroma cítrico', preco: 150.00, categoria: 'Perfume', fabricado_em_mari: false, estoque: 30 },
-    // Adicione mais itens conforme necessário
-  ]);
   const [busca, setBusca] = useState('');
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const [mensagem, setMensagem] = useState(''); // Para exibir mensagens de sucesso ou erro
 
+  // Função para buscar item pelo nome no banco de dados
   const handleBusca = () => {
-    const produto = itensEstoque.find(item => item.nome.toLowerCase() === busca.toLowerCase());
-    if (produto) {
-      setProdutoSelecionado(produto);
-    } else {
-      alert('Item não encontrado');
-      setProdutoSelecionado(null);
-    }
+    axios
+      .get(`http://localhost:3001/produto/${busca}`) // Substitua pela URL do seu backend
+      .then((response) => {
+        console.log(response.data.prod[0]);
+        if (response.data) {
+          setProdutoSelecionado(response.data.prod[0]);
+          setMensagem('');
+        } else {
+          setProdutoSelecionado(null);
+          setMensagem('Produto não encontrado.');
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar produto:', error);
+        setMensagem('Erro ao buscar o produto.');
+      });
   };
 
+  // Função para alterar os dados do produto
   const handleAlterar = (campo, valor) => {
     setProdutoSelecionado({
       ...produtoSelecionado,
-      [campo]: valor
+      [campo]: valor,
     });
   };
 
+  // Função para salvar as alterações no banco de dados
   const handleSalvarAlteracoes = () => {
-    // Aqui você adicionaria a lógica para salvar as alterações no banco de dados
-    alert('Alterações salvas com sucesso!');
-    navigate('/gerenciar_estoque');
+    if (produtoSelecionado) {
+      axios
+        .put(`http://localhost:3001/produto/${produtoSelecionado.id}`, produtoSelecionado) // Substitua pela URL correta do backend
+        .then(() => {
+          setMensagem('Alterações salvas com sucesso!');
+          setProdutoSelecionado(null); // Limpa o produto selecionado após salvar
+          setBusca(''); // Limpa o campo de busca
+        })
+        .catch((error) => {
+          console.error('Erro ao salvar alterações:', error);
+          setMensagem('Erro ao salvar as alterações.');
+        });
+    }
   };
 
   return (
@@ -51,17 +69,8 @@ function AlterarEstoque() {
         <button onClick={handleBusca}>Buscar</button>
       </div>
 
-      {/* Listagem de todos os itens do estoque */}
-      <div className="lista-itens">
-        <h3>Itens Disponíveis no Estoque:</h3>
-        <ul>
-          {itensEstoque.map(item => (
-            <li key={item.id}>
-              {item.nome} - {item.descricao} - R$ {item.preco} - Estoque: {item.estoque}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Mensagem de erro ou sucesso */}
+      {mensagem && <p>{mensagem}</p>}
 
       {/* Se o item foi selecionado para alteração */}
       {produtoSelecionado && (

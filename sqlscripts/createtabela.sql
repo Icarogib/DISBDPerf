@@ -6,7 +6,8 @@ CREATE TABLE cliente (
     endereco VARCHAR(50) NOT NULL,
     cidade VARCHAR(20) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
-    torce_fla BOOLEAN NOT NULL
+    torce_fla BOOLEAN NOT NULL,
+    onepiece BOOLEAN NOT NULL
 );
 
 
@@ -25,7 +26,7 @@ CREATE TABLE produto (
     descricao VARCHAR(45) NOT NULL,
     preco DECIMAL(10, 2) NOT NULL,
     categoria VARCHAR(45) NOT NULL,
-    fabricado_em VARCHAR(45) NOT NULL,
+    fabricado_em BOOLEAN NOT NULL,
     estoque INT NOT NULL
 );
 
@@ -50,17 +51,31 @@ CREATE TABLE item_venda (
 );
 
 CREATE TABLE forma_pagamento (
-    forma_pagamento_id INT PRIMARY KEY,
-    descricao VARCHAR(45) NOT NULL,
-    status_pagamento VARCHAR(45) NOT NULL
+    id INT PRIMARY KEY,
+    descricao VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE pagamento (
-    pagamento_id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     venda_id INT NOT NULL,
     forma_pagamento_id INT NOT NULL,
     data_pagamento VARCHAR(20) NOT NULL,
     status_pagamento VARCHAR(30) NOT NULL,
-    FOREIGN KEY (forma_pagamento_id) REFERENCES forma_pagamento(forma_pagamento_id),
+    FOREIGN KEY (forma_pagamento_id) REFERENCES forma_pagamento(id),
     FOREIGN KEY (venda_id) REFERENCES venda(id)
 );
+
+insert into forma_pagamento 
+values (1, 'Boleto');
+
+insert into forma_pagamento 
+values (2, 'Cartao de Debito');
+
+insert into forma_pagamento 
+values (3, 'Cartao de Credito');
+
+insert into forma_pagamento 
+values (4, 'Pix');
+
+insert into forma_pagamento 
+values (5, 'Berries');

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import '../App.css'; // Se houver um estilo comum para a aplicação, importe aqui
+import '../App.css'; // Estilo comum da aplicação
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Adicionar Axios para as requisições
 
 function RemoverCliente() {
   const navigate = useNavigate();
@@ -8,32 +9,35 @@ function RemoverCliente() {
   const [clienteEncontrado, setClienteEncontrado] = useState(null);
   const [mensagem, setMensagem] = useState('');
 
-  // Função para buscar o cliente pelo CPF (aqui deve ser feita a integração com o backend)
+  // Função para buscar o cliente pelo CPF
   const handleBuscarCliente = () => {
-    // Simulação de busca de cliente
-    const clienteExemplo = {
-      nome: 'João da Silva',
-      cpf: '123.456.789-00',
-      email: 'joao.silva@email.com',
-      telefone: '(11) 98765-4321',
-    };
-
-    if (cpf === '123.456.789-00') {
-      setClienteEncontrado(clienteExemplo);
-      setMensagem('');
-    } else {
-      setClienteEncontrado(null);
-      setMensagem('Cliente não encontrado.');
-    }
+    axios
+      .get(`http://localhost:3001/cliente/${cpf}`) // Substituir pela URL correta do backend
+      .then((response) => {
+        setClienteEncontrado(response.data.cliente); // Armazena o cliente retornado
+        setMensagem('');
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar cliente:', error);
+        setClienteEncontrado(null);
+        setMensagem('Cliente não encontrado.');
+      });
   };
 
-  // Função para remover o cliente (aqui deve ser feita a integração com o backend)
+  // Função para remover o cliente
   const handleRemoverCliente = () => {
     if (clienteEncontrado) {
-      // Aqui você chamaria o backend para remover o cliente
-      setMensagem(`Cliente ${clienteEncontrado.nome} foi removido com sucesso.`);
-      setClienteEncontrado(null); // Limpa a informação do cliente após remover
-      setCpf(''); // Limpa o campo de CPF
+      axios
+        .delete(`http://localhost:3001/cliente/${clienteEncontrado.id}`) // Substituir pela URL correta do backend
+        .then(() => {
+          setMensagem(`Cliente ${clienteEncontrado.nome} foi removido com sucesso.`);
+          setClienteEncontrado(null); // Limpa a informação do cliente após remover
+          setCpf(''); // Limpa o campo de CPF
+        })
+        .catch((error) => {
+          console.error('Erro ao remover cliente:', error);
+          setMensagem('Erro ao remover o cliente.');
+        });
     }
   };
 

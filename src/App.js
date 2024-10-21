@@ -8,7 +8,7 @@ import Login from './components/Login';
 import AppHomeCliente from './components/AppHomeCliente';
 import AppHomeVendedor from './components/AppHomeVendedor';
 import ClienteDadosPessoais from './components/ClienteDadosPessoais';
-import ClienteDadosPessoaisCopy from './components/ClienteDadosPessoaisCopy';
+import ClienteDadosPessoaisEdit from './components/ClienteDadosPessoaisEdit';
 import ClientePedidos from './components/ClientePedidos';
 import ClienteCompras from './components/ClienteCompras';
 import ClientePagamento from './components/ClientePagamento'
@@ -20,6 +20,8 @@ import VendedorClienteListar from './components/VendedorClienteListar'
 import VendedorEstoque from './components/VendedorEstoque'
 import VendedorEstoqueAlterar from './components/VendedorEstoqueAlterar'
 import VendedorEstoqueCadastrar from './components/VendedorEstoqueCadastrar'
+import VendedorEstoqueListar from './components/VendedorEstoqueListar'
+import VendedorEstoqueRemover from './components/VendedorEstoqueRemover'
 
 //import ClienteList from './components/listaClientes'; // Ajuste o caminho conforme necessário
 //esse import listaclientes eh para o comentado abaixo.
@@ -47,11 +49,13 @@ function App() {
           <Route path="/iniciar_compras" element={<ClienteCompras/>} />
           <Route path="/pagamento" element={<ClientePagamento/>} />
           <Route path="/dados_pessoais" element={<ClienteDadosPessoais/>} />
-          <Route path="/changeData" element={<ClienteDadosPessoaisCopy/>} />
+          <Route path="/changeData" element={<ClienteDadosPessoaisEdit/>} />
           <Route path="/pedidos" element={<ClientePedidos/>} />
           <Route path="/vendedor_dashboard" element={<AppHomeVendedor/>} />
           <Route path="/gerenciar_cliente" element={<VendedorCliente/>} />
           <Route path="/cadastrar_cliente" element={<VendedorClienteCadastrar/>} />
+          <Route path="/listar_produtos" element={<VendedorEstoqueListar/>} />
+          <Route path="/remover_produto" element={<VendedorEstoqueRemover/>} />
           <Route path="/remover_cliente" element={<VendedorClienteRemover/>} />
           <Route path="/listar_clientes" element={<VendedorClienteListar/>} />
           <Route path="/gerenciar_estoque" element={<VendedorEstoque/>} />

@@ -1,30 +1,39 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Importando Axios para realizar requisições HTTP
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 
 function CadastrarClientes() {
-  // Estado inicial com os dados do cliente (esses dados poderiam ser carregados de um backend)
+  // Inicializa dadosCliente com um objeto contendo as propriedades esperadas
   const [dadosCliente, setDadosCliente] = useState({
-    nome: 'João da Silva',
-    cpf: '123.456.789-00',
-    email: 'joao.silva@email.com',
-    telefone: '(11) 98765-4321',
-    endereco: 'Rua Exemplo, 123',
-    timeTorce: 'São Paulo FC',
-    cidade: 'São Paulo',
-    onePieceFan: 'Sim',
+    nome: '',
+    cpf: '',
+    email: '',
+    telefone: '',
+    endereco: '',
+    cidade: '',
+    torce_fla: false,
+    onepiece: false,
   });
 
-  const [editando, setEditando] = useState(true); // Estado para saber se o usuário está em modo de edição
-
+  const [editando, setEditando] = useState(true);
   const navigate = useNavigate();
 
-  // Função para salvar as alterações
-  const handleSalvar = () => {
-    // Aqui você pode adicionar a lógica para salvar os dados (no backend, por exemplo)
-    setEditando(false);
-    alert('Dados atualizados com sucesso!');
-    navigate('/dados_pessoais')
+  // Função para salvar os dados do cliente
+  const handleSalvar = async () => {
+    try {
+      // Fazendo a requisição POST para salvar os dados do cliente no backend
+      console.log(dadosCliente);
+      const response = await axios.post('http://localhost:3001/cliente', dadosCliente); 
+      console.log('Dados salvos com sucesso:', response.data);
+
+      setEditando(false);
+      alert('Dados atualizados com sucesso!');
+      navigate('/vendedor_dashboard');
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error);
+      alert('Ocorreu um erro ao salvar os dados. Tente novamente.');
+    }
   };
 
   // Função para lidar com mudanças nos campos de input
@@ -76,12 +85,13 @@ function CadastrarClientes() {
               dadosCliente.endereco
             )}
           </p>
-          <p><strong>Time que Torce:</strong> 
-            {editando ? (
-              <input type="text" name="timeTorce" value={dadosCliente.timeTorce} onChange={handleChange} />
-            ) : (
-              dadosCliente.timeTorce
-            )}
+          <p><strong>Flamenguista?:</strong>
+            <input
+              type="checkbox"
+              name="torce_fla"
+              checked={dadosCliente.torce_fla}
+              onChange={(e) => handleChange({ target: { name: 'torce_fla', value: e.target.checked } })}
+            />
           </p>
           <p><strong>Cidade:</strong> 
             {editando ? (
@@ -90,12 +100,13 @@ function CadastrarClientes() {
               dadosCliente.cidade
             )}
           </p>
-          <p><strong>OnePieceFan:</strong> 
-            {editando ? (
-              <input type="text" name="onePieceFan" value={dadosCliente.onePieceFan} onChange={handleChange} />
-            ) : (
-              dadosCliente.onePieceFan
-            )}
+          <p><strong>One Piece Fan:</strong>
+            <input
+              type="checkbox"
+              name="onepiece"
+              checked={dadosCliente.onepiece}
+              onChange={(e) => handleChange({ target: { name: 'onepiece', value: e.target.checked } })}
+            />
           </p>
         </div>
 

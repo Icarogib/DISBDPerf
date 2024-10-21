@@ -4,18 +4,18 @@ class CRUD {
     }
 
     inserir(table, data, callback) {
-      //a tabela vendas possue um tratamento especial para verificar se o produto que sera vendido eh possivel
+      /*//a tabela vendas possue um tratamento especial para verificar se o produto que sera vendido eh possivel
       //Se a quantidade a ser vendida eh maior que a disponivel no estoque, a venda nao eh concluida
-      if (table === 'vendas') {
+      if (table === 'item_venda') {
         const { produto_id, quantidade_vendida } = data;
 
         // Verifica a quantidade disponível no estoque
-        const sqlEstoque = `SELECT (estoque.quantidade - IFNULL(SUM(vendas.quantidade_vendida), 0)) AS quantidade_restante
+        const sqlEstoque = `SELECT (produto.estoque - IFNULL(SUM(item_venda.quantidade), 0)) AS quantidade_restante
                             FROM estoque
-                            LEFT JOIN vendas ON estoque.id = vendas.produto_id
-                            WHERE estoque.id = ?
+                            LEFT JOIN vendas ON produto.id = item_venda.produto_id
+                            WHERE produto.id = ?
                             GROUP BY
-                            estoque.quantidade`;
+                            produto.estoque`;
         //O comando em SQL acima seleciona a quantidade restante de um produto especifico no estoque
         // A funcao IFNULL eh usada para garantir que, se nao houver vendas registradas para aquele produto,
         // a soma das quantidades vendidas sera considerada como 0, em vez de NULL.
@@ -50,7 +50,7 @@ class CRUD {
             callback(null, { error: 'Produto não encontrado.' });
           }
         });
-      } else {
+      } else {*/
         // Insere para outras tabelas que não sejam vendas
         const keys = Object.keys(data);
         const values = Object.values(data);
@@ -59,7 +59,7 @@ class CRUD {
           if (err) throw err;
           callback(results);
         });
-      }
+      //}
     }
 
   
@@ -83,7 +83,7 @@ class CRUD {
   
     pesquisarPorNomeEstoque(nome, callback) {
       //seleciona todo o conteudo da tabela cliente onde nome for igual ao passado pelo parametro
-       const sql = `SELECT * FROM estoque WHERE nome_produto LIKE ?`;
+       const sql = `SELECT * FROM produto WHERE nome LIKE ?`;
        this.connection.query(sql, [`%${nome}%`], (err, results) => {
          if (err) throw err;
          callback(results);
@@ -116,7 +116,32 @@ class CRUD {
         callback(results);
       });
     }
-  
+
+    pesquisarPorCpf(table, cpf, callback) {//Seleciona todo o conteudo da tabela no qual o CPF eh igual o passado no parametro
+      const sql = `SELECT * FROM ${table} WHERE cpf = ?`;
+      this.connection.query(sql, [cpf], (err, results) => {
+        if (err) {
+          console.error('Erro ao buscar cliente por CPF:', err);
+          callback([]);
+        } else {
+          //console.log(results);
+          callback(results);
+        }
+      });
+    }
+    
+    pesquisarPorC_ID(table, cliente_id, callback) {
+      const sql = `SELECT * FROM ${table} WHERE cliente_id = ?`;
+      this.connection.query(sql, [cliente_id], (err, results) => {
+        if (err) {
+          //console.error('Erro ao buscar cliente por id:', err);
+          callback([]);
+        } else {
+          //console.log(results);
+          callback(results);
+        }
+      });
+    }
     atualizar(table, id, data, callback) {
       const keys = Object.keys(data);
       const values = Object.values(data);
