@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/ListarProdutos.css'; // Importa o CSS específico
+//import '../styles/ListarProdutos.css'; // Importa o CSS específico
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
 
   useEffect(() => {
     // Fazendo a requisição para buscar os produtos
-    axios.get('http://seu-servidor-api.com/produtos')
+    axios.get('http://localhost:3001/produtos')
       .then((response) => {
         setProdutos(response.data);
       })

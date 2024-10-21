@@ -12,7 +12,7 @@ function AlterarEstoque() {
   // Função para buscar item pelo nome no banco de dados
   const handleBusca = () => {
     axios
-      .get(`http://localhost:5000/produtos/nome/${busca}`) // Substitua pela URL do seu backend
+      .get(`http://localhost:3001/produto/nome/${busca}`) // Substitua pela URL do seu backend
       .then((response) => {
         if (response.data) {
           setProdutoSelecionado(response.data);

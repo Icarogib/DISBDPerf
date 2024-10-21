@@ -21,7 +21,7 @@ function LoginCliente() {
           // Armazena o CPF no localStorage após login bem-sucedido
           localStorage.setItem('clienteCpf', cpf);
           localStorage.setItem('clienteID', response.data.cliente.id);
-          console.log('data: ', response.data);
+          //console.log('data: ', response.data);
           navigate('/cliente_dashboard');
         } else {
           // Se a autenticação falhar, exibe a mensagem de erro

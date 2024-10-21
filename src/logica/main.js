@@ -45,7 +45,7 @@ app.use(cors());
 app.get('/cliente', (req, res) => {
   const crud = new CRUD(connection);
   crud.listar('cliente', (cliente) => {
-    console.log(cliente);
+    //console.log(cliente);
     res.json(cliente);
   });
 });
@@ -102,10 +102,9 @@ app.put('/cliente/:id', (req, res) => {
   const { id } = req.params;
   const { nome, cpf, email, endereco, cidade, telefone, torce_fla, onepiece } = req.body;
   const clienteAtualizado = new Cliente(id, nome, cpf, email, endereco, cidade, telefone, torce_fla, onepiece);
-  console.log(clienteAtualizado);
+  //console.log(clienteAtualizado);
   crud.atualizar('cliente', id, clienteAtualizado, (result) => {
     if(result.affectedRows == 0){
-      console.log(result);
         res.json({ message: 'Cliente não encontrado' });
     }
     else

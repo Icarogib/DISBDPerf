@@ -12,9 +12,9 @@ function RemoverCliente() {
   // Função para buscar o cliente pelo CPF
   const handleBuscarCliente = () => {
     axios
-      .get(`http://localhost:5000/clientes/${cpf}`) // Substituir pela URL correta do backend
+      .get(`http://localhost:3001/cliente/${cpf}`) // Substituir pela URL correta do backend
       .then((response) => {
-        setClienteEncontrado(response.data); // Armazena o cliente retornado
+        setClienteEncontrado(response.data.cliente); // Armazena o cliente retornado
         setMensagem('');
       })
       .catch((error) => {
@@ -28,7 +28,7 @@ function RemoverCliente() {
   const handleRemoverCliente = () => {
     if (clienteEncontrado) {
       axios
-        .delete(`http://localhost:5000/clientes/${clienteEncontrado.cpf}`) // Substituir pela URL correta do backend
+        .delete(`http://localhost:3001/cliente/${clienteEncontrado.id}`) // Substituir pela URL correta do backend
         .then(() => {
           setMensagem(`Cliente ${clienteEncontrado.nome} foi removido com sucesso.`);
           setClienteEncontrado(null); // Limpa a informação do cliente após remover

@@ -10,7 +10,7 @@ function CadastrarProduto() {
     descricao: '',
     preco: '',
     categoria: '',
-    fabricado_em_mari: false,
+    fabricado_em: false,
     estoque: ''
   });
   const [mensagem, setMensagem] = useState(''); // Para exibir mensagens de sucesso ou erro
@@ -26,7 +26,7 @@ function CadastrarProduto() {
     e.preventDefault();
     // Enviar o produto para o backend via POST
     axios
-      .post('http://localhost:5000/produtos', produto) // Substitua pela URL correta do backend
+      .post('http://localhost:3001/produto', produto) // Substitua pela URL correta do backend
       .then((response) => {
         setMensagem('Produto cadastrado com sucesso!');
         // Após cadastrar, limpa os campos
@@ -35,7 +35,7 @@ function CadastrarProduto() {
           descricao: '',
           preco: '',
           categoria: '',
-          fabricado_em_mari: false,
+          fabricado_em: false,
           estoque: ''
         });
       })
@@ -85,8 +85,8 @@ function CadastrarProduto() {
         <label>Fabricado em Mari:</label>
         <input
           type="checkbox"
-          checked={produto.fabricado_em_mari}
-          onChange={(e) => handleChange('fabricado_em_mari', e.target.checked)}
+          checked={produto.fabricado_em}
+          onChange={(e) => handleChange('fabricado_em', e.target.checked)}
         />
 
         <label>Estoque:</label>

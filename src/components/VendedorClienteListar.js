@@ -10,7 +10,7 @@ function ListarClientes() {
 
   // Requisição para buscar os clientes do backend
   useEffect(() => {
-    axios.get('http://localhost:5000/clientes') // Alterar para o endpoint correto da API
+    axios.get('http://localhost:3001/cliente') // Alterar para o endpoint correto da API
       .then((response) => {
         setClientes(response.data); // Armazena a resposta da API
       })

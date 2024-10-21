@@ -46,7 +46,6 @@ function AppHomeVendedor() {
       <div className="button_clientes">
       <button onClick={() => navigate('/gerenciar_cliente')}>Gerenciar Clientes</button>
         <button onClick={() => navigate('/gerenciar_estoque')}>Gerenciar Estoque</button>
-        <button onClick={() => navigate('/autorizar_pedido')}>Gerenciar Pedidos</button>
         <button onClick={() => navigate('/')}>Sair</button>
         </div>
       </div>

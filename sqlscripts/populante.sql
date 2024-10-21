@@ -11,10 +11,10 @@ insert into vendedor
 values(null, 'Mioma', 564234, 'vende2@vendeu.com', '6546523');
 
 insert into produto
-values(null, 'Macaque', 'Cheiro de macaco', 122, 'verde', 'araraquara', 20);
+values(null, 'Macaque', 'Cheiro de macaco', 122, 'verde', TRUE, 20);
 
 insert into produto
-values(null, 'Plantis', 'Cheiro de plantae', 24, 'musgo', 'jaboatao', 10);
+values(null, 'Plantis', 'Cheiro de plantae', 24, 'musgo', FALSE, 10);
 
 insert into venda
 values (null, 1, 1, '23/02/2022', 30.2);

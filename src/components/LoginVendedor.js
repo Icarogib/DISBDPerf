@@ -34,7 +34,7 @@ function LoginVendedor() {
 
   return (
     <div className="login-container">
-      <h2>Login de Cliente</h2>
+      <h2>Login de Vendedor</h2>
       <input
         type="text"
         placeholder="Digite seu CPF"

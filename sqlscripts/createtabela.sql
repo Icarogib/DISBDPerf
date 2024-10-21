@@ -26,7 +26,7 @@ CREATE TABLE produto (
     descricao VARCHAR(45) NOT NULL,
     preco DECIMAL(10, 2) NOT NULL,
     categoria VARCHAR(45) NOT NULL,
-    fabricado_em VARCHAR(45) NOT NULL,
+    fabricado_em BOOLEAN NOT NULL,
     estoque INT NOT NULL
 );
 
