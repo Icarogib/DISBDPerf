@@ -4,7 +4,11 @@ Projeto para a disciplina de Banco de Dados, focado em vendas de perfumes (perfu
 
 Utilize 'npm install' para baixar modulos do node
 
-Icaro starts.
+Para rodar o backend, src/logica/main.js
+node main.js
+
+Para rodar frontend, npm start
+
 
 
 Agora com REACT:
