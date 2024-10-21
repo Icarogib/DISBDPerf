@@ -1,5 +1,5 @@
 class Cliente {
-  constructor(id = null, nome = '', cpf = null, email = '', endereco = '', cidade = '', telefone = '', torce_fla = '') {
+  constructor(id = null, nome = '', cpf = null, email = '', endereco = '', cidade = '', telefone = '', torce_fla = '', onepiece = '') {
       this.id = id;
       this.nome = nome;
       this.cpf = cpf;
@@ -8,6 +8,7 @@ class Cliente {
       this.cidade = cidade;
       this.telefone = telefone;
       this.torce_fla = torce_fla;
+      this.onepiece = onepiece;
   }
 
   getID() {
@@ -34,6 +35,9 @@ class Cliente {
   getTorceFla() {
       return this.torce_fla;
   }
+  getOnepiece(){
+      return this.onepiece;
+  }
 
   setID(i) {
       this.id = i;
@@ -58,6 +62,9 @@ class Cliente {
   }
   setTorceFla(tf) {
       this.torce_fla = tf;
+  }
+  setOnepiece(op){
+      this.onepiece = op;
   }
 }
 

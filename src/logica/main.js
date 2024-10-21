@@ -45,6 +45,7 @@ app.use(cors());
 app.get('/cliente', (req, res) => {
   const crud = new CRUD(connection);
   crud.listar('cliente', (cliente) => {
+    console.log(cliente);
     res.json(cliente);
   });
 });
@@ -87,11 +88,10 @@ app.get('/cliente/:cpf', (req, res) => {
   });
 });
 
-
 app.post('/cliente', (req, res) => {
   const crud = new CRUD(connection);
-  const { nome, cpf, email, endereco, cidade, telefone, torce_fla  } = req.body;
-  const cliente = new Cliente(null, nome, cpf, email, endereco, cidade, telefone, torce_fla );
+  const { nome, cpf, email, endereco, cidade, telefone, torce_fla, onepiece } = req.body;
+  const cliente = new Cliente(null, nome, cpf, email, endereco, cidade, telefone, torce_fla, onepiece );
   crud.inserir('cliente', cliente, (result) => {
     res.json({ message: 'Cliente inserido com sucesso', id: result.insertId });
   });
@@ -100,11 +100,14 @@ app.post('/cliente', (req, res) => {
 app.put('/cliente/:id', (req, res) => {
   const crud = new CRUD(connection);
   const { id } = req.params;
-  const { nome, cpf, email, endereco, cidade, telefone, torce_fla } = req.body;
-  const clienteAtualizado = new Cliente(id, nome, cpf, email, endereco, cidade, telefone, torce_fla);
+  const { nome, cpf, email, endereco, cidade, telefone, torce_fla, onepiece } = req.body;
+  const clienteAtualizado = new Cliente(id, nome, cpf, email, endereco, cidade, telefone, torce_fla, onepiece);
+  console.log(clienteAtualizado);
   crud.atualizar('cliente', id, clienteAtualizado, (result) => {
-    if(result.affectedRows == 0)
+    if(result.affectedRows == 0){
+      console.log(result);
         res.json({ message: 'Cliente não encontrado' });
+    }
     else
         res.json({ message: 'Cliente atualizado com sucesso' });
   });

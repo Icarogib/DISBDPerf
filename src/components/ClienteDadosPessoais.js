@@ -8,12 +8,11 @@ function DadosPessoais() {
   const [dadosCliente, setDadosCliente] = useState(null);
   const [error, setError] = useState('');
 
-  // UseEffect para buscar os dados do cliente via API
   useEffect(() => {
      // Obtém o CPF do cliente do localStorage
      const cpf = localStorage.getItem('clienteCpf');
 
-     // Se o CPF não estiver presente, redireciona para a página de login
+     // Se não tiver o CPF redireciona para a pagina de login
      if (!cpf) {
        navigate('/login');
        return;
@@ -55,9 +54,9 @@ function DadosPessoais() {
             <p><strong>Email:</strong> {dadosCliente.email}</p>
             <p><strong>Telefone:</strong> {dadosCliente.telefone}</p>
             <p><strong>Endereço:</strong> {dadosCliente.endereco}</p>
-            <p><strong>Time que Torce:</strong> {dadosCliente.torce_fla ? 'Flamengo' : 'Outro Time'}</p>
+            <p><strong>Flamenguista?:</strong> {dadosCliente.torce_fla ? 'Sim' : 'Não'}</p>
             <p><strong>Cidade:</strong> {dadosCliente.cidade}</p>
-            <p><strong>One Piece Fan:</strong> {dadosCliente.onePieceFan ? 'Sim' : 'Não'}</p>
+            <p><strong>One Piece Fan:</strong> {dadosCliente.onepiece ? 'Sim' : 'Não'}</p>
           </div>
         ) : (
           <p>Carregando dados do cliente...</p>

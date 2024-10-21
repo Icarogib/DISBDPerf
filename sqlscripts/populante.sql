@@ -1,8 +1,8 @@
 insert into cliente
-values (null, 'Joao', 2035552, 'joaomaria@teste.com', 'rua floripa', 'rabuge', '888551112', true);
+values (null, 'Joao', 123, 'joaomaria@teste.com', 'rua floripa', 'rabuge', '888551112', true, false);
 
 insert into cliente
-values (null,  'Latrel', 65121, 'latrel@kent.com', 'rua kekekrs', 'sorocaba', '35735342', false);
+values (null,  'Latrel', 321, 'latrel@kent.com', 'rua kekekrs', 'sorocaba', '35735342', false, true);
 
 insert into vendedor
 values(null, 'Ivana', 25424, 'vende1@vendeu.com', '35264643');

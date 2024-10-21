@@ -4,53 +4,61 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function ChangeData() {
+  const navigate = useNavigate();
   const [dadosCliente, setDadosCliente] = useState(null);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
-  // UseEffect para carregar os dados do cliente
   useEffect(() => {
-    const fetchDadosCliente = async () => {
+    const cpf = localStorage.getItem('clienteCpf');
+
+    if (!cpf) {
+      navigate('/login');
+      return;
+    }
+
+    const fetchCliente = async () => {
       try {
-        const cpf = localStorage.getItem('clienteCpf');
-        if (!cpf) {
-          navigate('/login');
-          return;
+        const response = await axios.get(`http://localhost:3001/cliente/${cpf}`);
+        if (response.data.success) {
+          setDadosCliente(response.data.cliente);
+        } else {
+          setError(response.data.message);
         }
-        const response = await axios.get(`http://localhost:3001/clientes/${cpf}`);
-        setDadosCliente(response.data);
       } catch (err) {
-        setError('Erro ao carregar dados do cliente.');
-        console.error('Erro ao buscar dados:', err);
+        console.error('Erro ao buscar dados do cliente:', err);
+        setError('Erro ao carregar informações do cliente.');
       }
     };
 
-    fetchDadosCliente();
+    fetchCliente();
   }, [navigate]);
 
-  // Função para salvar os dados atualizados
   const handleSalvar = async () => {
     try {
-      const cpf = localStorage.getItem('clienteCpf');
-      if (!cpf) {
-        navigate('/login');
+      if (!dadosCliente || !dadosCliente.id) {
+        setError('Dados do cliente inválidos.');
         return;
       }
-      await axios.put(`http://localhost:3001/clientes/${cpf}`, dadosCliente);
+
+      // Envia os dados atualizados para a API
+      await axios.put(`http://localhost:3001/cliente/${dadosCliente.id}`, dadosCliente);
       alert('Dados atualizados com sucesso!');
-      navigate('/dados_pessoais'); // Redireciona após salvar
+      navigate('/dados_pessoais');
     } catch (err) {
       setError('Erro ao salvar os dados. Tente novamente.');
       console.error('Erro ao salvar dados:', err);
     }
   };
 
-  // Função para lidar com as alterações nos campos de input
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // O campo onepiece deve ser tratado como booleano
+    const updatedValue = name === 'onePieceFan' ? value === 'true' : value;
+
     setDadosCliente({
       ...dadosCliente,
-      [name]: value,
+      [name]: updatedValue,
     });
   };
 
@@ -76,14 +84,24 @@ function ChangeData() {
             <p><strong>Endereço:</strong>
               <input type="text" name="endereco" value={dadosCliente.endereco} onChange={handleChange} />
             </p>
-            <p><strong>Time que Torce:</strong>
-              <input type="text" name="timeTorce" value={dadosCliente.timeTorce} onChange={handleChange} />
-            </p>
+            <p><strong>Flamenguista?:</strong>
+            <input
+              type="checkbox"
+              name="torce_fla"
+              checked={dadosCliente.torce_fla}
+              onChange={(e) => handleChange({ target: { name: 'torce_fla', value: e.target.checked } })}
+            />
+          </p>
             <p><strong>Cidade:</strong>
               <input type="text" name="cidade" value={dadosCliente.cidade} onChange={handleChange} />
             </p>
             <p><strong>One Piece Fan:</strong>
-              <input type="text" name="onePieceFan" value={dadosCliente.onePieceFan} onChange={handleChange} />
+            <input
+              type="checkbox"
+              name="onepiece"
+              checked={dadosCliente.onepiece}
+              onChange={(e) => handleChange({ target: { name: 'onepiece', value: e.target.checked } })}
+            />
             </p>
           </div>
         ) : (
