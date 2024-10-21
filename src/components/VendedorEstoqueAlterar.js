@@ -12,10 +12,11 @@ function AlterarEstoque() {
   // Função para buscar item pelo nome no banco de dados
   const handleBusca = () => {
     axios
-      .get(`http://localhost:3001/produto/nome/${busca}`) // Substitua pela URL do seu backend
+      .get(`http://localhost:3001/produto/${busca}`) // Substitua pela URL do seu backend
       .then((response) => {
+        console.log(response.data.prod[0]);
         if (response.data) {
-          setProdutoSelecionado(response.data);
+          setProdutoSelecionado(response.data.prod[0]);
           setMensagem('');
         } else {
           setProdutoSelecionado(null);
@@ -40,7 +41,7 @@ function AlterarEstoque() {
   const handleSalvarAlteracoes = () => {
     if (produtoSelecionado) {
       axios
-        .put(`http://localhost:5000/produtos/${produtoSelecionado.id}`, produtoSelecionado) // Substitua pela URL correta do backend
+        .put(`http://localhost:3001/produto/${produtoSelecionado.id}`, produtoSelecionado) // Substitua pela URL correta do backend
         .then(() => {
           setMensagem('Alterações salvas com sucesso!');
           setProdutoSelecionado(null); // Limpa o produto selecionado após salvar

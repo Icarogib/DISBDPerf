@@ -253,6 +253,26 @@ app.delete('/produto/:id', (req, res) => {
   });
 });
 
+
+app.get('/produto/:nome', (req, res) => {
+  const crud = new CRUD(connection);
+  const { nome } = req.params;
+
+  // Verifica se o id foi fornecido
+  if (!nome) {
+    return res.status(400).json({ success: false, message: 'Nome do produto é obrigatório' });
+  }
+
+  // Pesquisa o vendedor no banco de dados com base no CPF
+  crud.pesquisarPorNomeEstoque( nome, (result) => {
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: 'Nome não encontrado' });
+    } else {
+      return res.status(200).json({ success: true, message: 'Nome encontrado', prod: result });
+    }
+  });
+});
+
 /* ==========================================================================
 // Rotas CRUD para venda 
 // erro se colocar vendedor/cliente que nao existe!

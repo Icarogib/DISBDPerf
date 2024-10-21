@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 //import '../styles/RemoverProduto.css'; // Importa o CSS específico
 
 function RemoverProduto() {
   const [produtos, setProdutos] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fazendo a requisição para buscar os produtos
-    axios.get('http://seu-servidor-api.com/produtos')
+    axios.get('http://localhost:3001/produto')
       .then((response) => {
         setProdutos(response.data);
       })
@@ -18,7 +20,7 @@ function RemoverProduto() {
 
   const handleRemover = (id) => {
     // Fazendo a requisição para remover o produto pelo ID
-    axios.delete(`http://seu-servidor-api.com/produtos/${id}`)
+    axios.delete(`http://localhost:3001/produto/${id}`)
       .then(() => {
         setProdutos(produtos.filter(produto => produto.id !== id));
         alert('Produto removido com sucesso.');
@@ -61,6 +63,7 @@ function RemoverProduto() {
       ) : (
         <p>Nenhum produto disponível para remoção.</p>
       )}
+      <button onClick={() => navigate('/gerenciar_estoque')}>Voltar</button>
     </div>
   );
 }

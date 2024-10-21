@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 //import '../styles/ListarProdutos.css'; // Importa o CSS específico
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fazendo a requisição para buscar os produtos
-    axios.get('http://localhost:3001/produtos')
+    axios.get('http://localhost:3001/produto')
       .then((response) => {
         setProdutos(response.data);
       })
@@ -30,6 +33,7 @@ function ListarProdutos() {
       ) : (
         <p>Nenhum produto encontrado no estoque.</p>
       )}
+      <button onClick={() => navigate('/gerenciar_estoque')}>Voltar</button>
     </div>
   );
 }

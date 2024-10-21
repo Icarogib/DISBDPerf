@@ -83,7 +83,7 @@ class CRUD {
   
     pesquisarPorNomeEstoque(nome, callback) {
       //seleciona todo o conteudo da tabela cliente onde nome for igual ao passado pelo parametro
-       const sql = `SELECT * FROM estoque WHERE nome_produto LIKE ?`;
+       const sql = `SELECT * FROM produto WHERE nome LIKE ?`;
        this.connection.query(sql, [`%${nome}%`], (err, results) => {
          if (err) throw err;
          callback(results);
