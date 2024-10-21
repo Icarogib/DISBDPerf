@@ -6,6 +6,7 @@ import axios from 'axios';
 function AppHome() {
   const navigate = useNavigate();
   const [produtos, setProdutos] = useState([]);
+  const [backgroundVisible, setBackgroundVisible] = useState(false); // Estado para controlar a visibilidade da imagem de fundo
 
   useEffect(() => {
     // Fazendo a requisição para buscar os produtos
@@ -19,38 +20,51 @@ function AppHome() {
       });
   }, []);
 
+  // Função para alternar a visibilidade da imagem de fundo
+  const toggleBackground = () => {
+    setBackgroundVisible(!backgroundVisible);
+  };
 
   return (
     <div
       className="container"
-      /*style={{
-        backgroundImage: `url('/img/image.png')`,
-        backgroundSize: 'cover', // Faz a imagem cobrir todo o fundo
-        backgroundPosition: 'center', // Centraliza a imagem
-        height: '100vh' // Ocupa toda a altura da viewport
-      }}*/
+      style={{
+        backgroundImage: backgroundVisible ? `url('/img/image.png')` : 'none', // Aplica a imagem de fundo se backgroundVisible for true
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '100vh',
+      }}
     >
-      <div className='ttPrincipal1'><h1>Salsicha's Perfumaria</h1></div>
+      <div className='ttPrincipal1'>
+        <h1 
+          onClick={toggleBackground} // Adiciona a função de clique ao título
+          style={{
+            cursor: 'pointer', // Muda o cursor para indicar que é clicável
+            background: 'none', // Remove qualquer fundo
+            color: 'black', // Você pode escolher a cor que preferir
+          }}
+        >
+          Salsicha's Perfumaria
+        </h1>
+      </div>
       {/* Botão de login no canto superior direito */}
-      <button className="login-button" 
-      onClick={() => navigate('/login')}>Login</button>
+      <button className="login-button" onClick={() => navigate('/login')}>Login</button>
       {/* Conteúdo do catálogo pode ser adicionado aqui */}
       <div className="catalog-container">
         <h2>Catálogo de Itens</h2>
         <div className="listar-produtos-container">
-        {produtos.length > 0 ? (
-          <ul className="lista-produtos">
-            {produtos.map(produto => (
-              <li key={produto.id}>
-                {produto.nome} - {produto.descricao} - Preço: R$ {produto.preco}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Sem produtos no estoque D: Tente mais tarde!.</p>
-        )}
-      </div>
-        {/* Aqui você pode adicionar itens do catálogo quando estiver pronto */}
+          {produtos.length > 0 ? (
+            <ul className="lista-produtos">
+              {produtos.map(produto => (
+                <li key={produto.id}>
+                  {produto.nome} - {produto.descricao} - Preço: R$ {produto.preco}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Sem produtos no estoque D: Tente mais tarde!.</p>
+          )}
+        </div>
       </div>
     </div>
   );
