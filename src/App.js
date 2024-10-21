@@ -8,7 +8,7 @@ import Login from './components/Login';
 import AppHomeCliente from './components/AppHomeCliente';
 import AppHomeVendedor from './components/AppHomeVendedor';
 import ClienteDadosPessoais from './components/ClienteDadosPessoais';
-import ClienteDadosPessoaisCopy from './components/ClienteDadosPessoaisCopy';
+import ClienteDadosPessoaisEdit from './components/ClienteDadosPessoaisEdit';
 import ClientePedidos from './components/ClientePedidos';
 import ClienteCompras from './components/ClienteCompras';
 import ClientePagamento from './components/ClientePagamento'
@@ -47,7 +47,7 @@ function App() {
           <Route path="/iniciar_compras" element={<ClienteCompras/>} />
           <Route path="/pagamento" element={<ClientePagamento/>} />
           <Route path="/dados_pessoais" element={<ClienteDadosPessoais/>} />
-          <Route path="/changeData" element={<ClienteDadosPessoaisCopy/>} />
+          <Route path="/changeData" element={<ClienteDadosPessoaisEdit/>} />
           <Route path="/pedidos" element={<ClientePedidos/>} />
           <Route path="/vendedor_dashboard" element={<AppHomeVendedor/>} />
           <Route path="/gerenciar_cliente" element={<VendedorCliente/>} />

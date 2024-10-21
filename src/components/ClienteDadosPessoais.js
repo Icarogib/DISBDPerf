@@ -4,29 +4,39 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function DadosPessoais() {
+  const navigate = useNavigate();
   const [dadosCliente, setDadosCliente] = useState(null);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   // UseEffect para buscar os dados do cliente via API
   useEffect(() => {
-    const fetchDadosCliente = async () => {
-      try {
-        const cpf = localStorage.getItem('clienteCpf'); // Obter CPF do cliente
-        if (!cpf) {
-          navigate('/login');
-          return;
-        }
-        const response = await axios.get(`http://localhost:3001/clientes/${cpf}`);
-        setDadosCliente(response.data); // Define os dados do cliente
-      } catch (err) {
-        setError('Erro ao carregar dados do cliente.');
-        console.error('Erro ao buscar dados:', err);
-      }
-    };
+     // Obtém o CPF do cliente do localStorage
+     const cpf = localStorage.getItem('clienteCpf');
 
-    fetchDadosCliente();
-  }, [navigate]);
+     // Se o CPF não estiver presente, redireciona para a página de login
+     if (!cpf) {
+       navigate('/login');
+       return;
+     }
+ 
+     // Busca os dados do cliente com base no CPF
+     const fetchCliente = async () => {
+       try {
+         const response = await axios.get(`http://localhost:3001/cliente/${cpf}`);
+         // Verifica se a resposta foi bem-sucedida
+         if (response.data.success) {
+           setDadosCliente(response.data.cliente); // Atualiza o nome do cliente com os dados recebidos
+         } else {
+           setError(response.data.message);
+         }
+       } catch (err) {
+         console.error('Erro ao buscar dados do cliente:', err);
+         setError('Erro ao carregar informações do cliente.');
+       }
+     };
+ 
+     fetchCliente(); // Chama a função ao montar o componente
+   }, [navigate]);
 
   // Função para redirecionar para a página de edição
   const handleAtualizar = () => {
@@ -45,9 +55,9 @@ function DadosPessoais() {
             <p><strong>Email:</strong> {dadosCliente.email}</p>
             <p><strong>Telefone:</strong> {dadosCliente.telefone}</p>
             <p><strong>Endereço:</strong> {dadosCliente.endereco}</p>
-            <p><strong>Time que Torce:</strong> {dadosCliente.timeTorce}</p>
+            <p><strong>Time que Torce:</strong> {dadosCliente.torce_fla ? 'Flamengo' : 'Outro Time'}</p>
             <p><strong>Cidade:</strong> {dadosCliente.cidade}</p>
-            <p><strong>One Piece Fan:</strong> {dadosCliente.onePieceFan}</p>
+            <p><strong>One Piece Fan:</strong> {dadosCliente.onePieceFan ? 'Sim' : 'Não'}</p>
           </div>
         ) : (
           <p>Carregando dados do cliente...</p>

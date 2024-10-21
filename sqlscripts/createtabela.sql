@@ -6,7 +6,8 @@ CREATE TABLE cliente (
     endereco VARCHAR(50) NOT NULL,
     cidade VARCHAR(20) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
-    torce_fla BOOLEAN NOT NULL
+    torce_fla BOOLEAN NOT NULL,
+    onepiece BOOLEAN NOT NULL
 );
 
 
