@@ -279,6 +279,25 @@ app.post('/venda', (req, res) => {
   });
 });
 
+app.get('/venda/:cliente_id', (req, res) => {
+  const crud = new CRUD(connection);
+  const { cliente_id } = req.params;
+
+  // Verifica se o id foi fornecido
+  if (!cliente_id) {
+    return res.status(400).json({ success: false, message: 'id do cliente é obrigatório' });
+  }
+
+  // Pesquisa o vendedor no banco de dados com base no CPF
+  crud.pesquisarPorC_ID('venda', parseInt(cliente_id), (result) => {
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: 'Pedido não encontrado' });
+    } else {
+      return res.status(200).json({ success: true, message: 'Pedido encontrado', pedidos: result });
+    }
+  });
+});
+
 app.put('/venda/:id', (req, res) => {
   const crud = new CRUD(connection);
   const { id } = req.params;

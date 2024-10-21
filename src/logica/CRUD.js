@@ -129,7 +129,19 @@ class CRUD {
         }
       });
     }
-  
+    
+    pesquisarPorC_ID(table, cliente_id, callback) {
+      const sql = `SELECT * FROM ${table} WHERE cliente_id = ?`;
+      this.connection.query(sql, [cliente_id], (err, results) => {
+        if (err) {
+          //console.error('Erro ao buscar cliente por id:', err);
+          callback([]);
+        } else {
+          //console.log(results);
+          callback(results);
+        }
+      });
+    }
     atualizar(table, id, data, callback) {
       const keys = Object.keys(data);
       const values = Object.values(data);

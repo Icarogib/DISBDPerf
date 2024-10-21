@@ -5,6 +5,7 @@ import axios from 'axios';
 
 function LoginCliente() {
   const [cpf, setCpf] = useState('');
+  //const [id, setId] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -19,6 +20,8 @@ function LoginCliente() {
           console.log('Cliente autenticado com CPF:', cpf);
           // Armazena o CPF no localStorage após login bem-sucedido
           localStorage.setItem('clienteCpf', cpf);
+          localStorage.setItem('clienteID', response.data.cliente.id);
+          console.log('data: ', response.data);
           navigate('/cliente_dashboard');
         } else {
           // Se a autenticação falhar, exibe a mensagem de erro

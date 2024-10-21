@@ -4,42 +4,36 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function ListaPedidos() {
-  // Estado que armazena os pedidos do cliente
   const [pedidos, setPedidos] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Carregamento dos pedidos do cliente usando Axios
   useEffect(() => {
     const fetchPedidos = async () => {
       try {
-        // Obtém o CPF do cliente armazenado no localStorage (ou ID se preferir)
-        const cpf = localStorage.getItem('clienteCpf');
-
-        if (!cpf) {
-          // Se não houver CPF, redireciona para o login
-          navigate('/login');
-          return;
-        }
+        const cliente_id = localStorage.getItem('clienteID');
 
         // Requisição para obter os pedidos do cliente
-        const response = await axios.get(`http://localhost:3001/pedidos/${cpf}`);
-        
-        // Atualiza o estado com os pedidos recebidos
-        setPedidos(response.data);
+        const response = await axios.get(`http://localhost:3001/venda/${cliente_id}`);
+
+        if (response.data && response.data.pedidos) {
+          // Atualiza o estado com a lista de pedidos recebida do backend
+          setPedidos(response.data.pedidos);
+        } else {
+          setError('Nenhum pedido encontrado');
+        }
       } catch (err) {
         console.error('Erro ao buscar pedidos do cliente:', err);
         setError('Erro ao carregar os pedidos. Tente novamente.');
       }
     };
 
-    fetchPedidos(); // Chama a função ao montar o componente
+    fetchPedidos();
   }, [navigate]);
 
   return (
     <div className="lista-pedidos-container">
       <h2>Meus Pedidos</h2>
-      {/* Verifica se há pedidos para exibir */}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {pedidos.length > 0 ? (
         <table className="pedidos-tabela">
@@ -47,17 +41,17 @@ function ListaPedidos() {
             <tr>
               <th>ID do Pedido</th>
               <th>Data</th>
+              <th>Vendedor</th>
               <th>Valor Total (R$)</th>
-              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {pedidos.map((pedido) => (
               <tr key={pedido.id}>
                 <td>{pedido.id}</td>
-                <td>{pedido.data}</td>
-                <td>{pedido.valorTotal.toFixed(2)}</td>
-                <td>{pedido.status}</td>
+                <td>{pedido.data_venda}</td>
+                <td>{pedido.vendedor_id}</td>
+                <td>{parseFloat(pedido.total_venda).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
@@ -71,13 +65,3 @@ function ListaPedidos() {
 }
 
 export default ListaPedidos;
-/*app.get('/pedidos/:cpf', (req, res) => {
-  const cpf = req.params.cpf;
-  // Lógica para buscar os pedidos do cliente no banco de dados
-  const pedidos = buscarPedidosPorCpf(cpf); // Exemplo de função
-  if (pedidos) {
-    res.json(pedidos); // Retorna os pedidos do cliente
-  } else {
-    res.status(404).json({ error: 'Pedidos não encontrados para este CPF' });
-  }
-});Usar no backend */
