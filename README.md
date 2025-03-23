@@ -4,11 +4,15 @@ Projeto para a disciplina de Banco de Dados, focado em vendas de perfumes (perfu
 
 Utilize 'npm install' para baixar modulos do node
 
-Para rodar o backend, src/logica/main.js
-node main.js
+Abra o servidor mySQL e crie com as especificações do main.js (cors) ou então
+modifique e crie o seu próprio.
 
-Para rodar frontend, npm start
+se quiser popula-lo, abra o sqlscripts e rode cada script no mysql
 
+Vá em src/logica/ e rode o main.js;
+'node main.js'
+
+Após isso, utilize 'npm start' para iniciar o front
 
 
 Agora com REACT:
